@@ -15,7 +15,7 @@ let moveSpeed = 5;
 
 let omori_htbx = 28;
 
-//Sprite loading -------------------------------------------------------------------------
+// Sprite loading ------------------------------------------------------------------------
 
 const omori = new Image();
 omori.src = "sprites/omori/omStanding_F.png";
@@ -40,48 +40,111 @@ tissues.src = "sprites/tissuebox.png";
 const laptop = new Image();
 laptop.src = "sprites/laptop.png";
 
-omori.onload = () => {
-    drawOmori(Xomori, Yomori);
-};
+// Object hitboxes -----------------------------------------------------------------------
 
-// Movement ------------------------------------------------------------------------------
+let objects = [
+    { name: "door", x: 320, y: 40, width: 60, height: 100 },
+    { name: "cat", x: 330, y: 415, width: 64, height: 64 },
+    { name: "sketchbook", x: 565, y: 145, width: 64, height: 64 },
+    { name: "tissues", x: 565, y: 330, width: 64, height: 64 },
+    { name: "laptop", x: 400, y: 155, width: 64, height: 64 },
+    { name: "lightbulb", x: 450, y: 0, width: 64, height: 64 }
+];
+
+// Draw Omori and objects ----------------------------------------------------------------
 
 let currentOmori = omori;
 
 function drawOmori(x, y) {
     ctx.strokeRect(width / 2 - 150, height / 2 - 125, 300, 250);
-    ctx.drawImage(door, 320, 40);
-    ctx.drawImage(cat, 330, 415);
-    ctx.drawImage(sketchbook, 565, 145);
-    ctx.drawImage(tissues, 565, 330);
-    ctx.drawImage(laptop, 400, 155);
-    ctx.drawImage(currentOmori, x - omori_htbx, y - omori_htbx, omori_htbx * 2, omori_htbx * 2);
-    ctx.drawImage(lightbulb, 450, 0);
 
-    return;
+    for (let obj of objects) {
+        switch (obj.name) {
+            case "door": ctx.drawImage(door, obj.x, obj.y); break;
+            case "cat": ctx.drawImage(cat, obj.x, obj.y); break;
+            case "sketchbook": ctx.drawImage(sketchbook, obj.x, obj.y); break;
+            case "tissues": ctx.drawImage(tissues, obj.x, obj.y); break;
+            case "laptop": ctx.drawImage(laptop, obj.x, obj.y); break;
+            case "lightbulb": ctx.drawImage(lightbulb, obj.x, obj.y); break;
+        }
+    }
+
+    ctx.drawImage(
+        currentOmori,
+        x - omori_htbx,
+        y - omori_htbx,
+        omori_htbx * 2,
+        omori_htbx * 2
+    );
 }
+
+// Collision detection -------------------------------------------------------------------
+
+function isColliding(ax, ay, aw, ah, bx, by, bw, bh) {
+    return (
+        ax < bx + bw &&
+        ax + aw > bx &&
+        ay < by + bh &&
+        ay + ah > by
+    );
+}
+
+// Movement ------------------------------------------------------------------------------
 
 function moveByKey(event) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     currentOmori = omoriRun;
 
+    let newX = Xomori;
+    let newY = Yomori;
+
     switch (event.key) {
         case "ArrowUp":
-            Yomori -= moveSpeed;
-            if (Yomori - omori_htbx < 0) {Yomori = 0 + omori_htbx};
+            newY -= moveSpeed;
             break;
         case "ArrowDown":
-            Yomori += moveSpeed;
-            if (Yomori + omori_htbx > height) {Yomori = height - omori_htbx};
+            newY += moveSpeed;
             break;
         case "ArrowLeft":
-            Xomori -= moveSpeed;
-            if (Xomori - omori_htbx < 0) {Xomori = 0 + omori_htbx};
+            newX -= moveSpeed;
             break;
         case "ArrowRight":
-            Xomori += moveSpeed;
-            if (Xomori + omori_htbx > width) {Xomori = width - omori_htbx};
+            newX += moveSpeed;
             break;
+    }
+
+    // Omori's bounding box for collision check
+    let omoriBox = {
+        x: newX - omori_htbx,
+        y: newY - omori_htbx,
+        width: omori_htbx * 2,
+        height: omori_htbx * 2
+    };
+
+    // Check collision with all objects
+    let blocked = false;
+    for (let obj of objects) {
+        if (
+            isColliding(
+                omoriBox.x, omoriBox.y, omoriBox.width, omoriBox.height,
+                obj.x, obj.y, obj.width, obj.height
+            )
+        ) {
+            blocked = true;
+            break;
+        }
+    }
+
+    // Only move if not blocked
+    if (!blocked) {
+        Xomori = newX;
+        Yomori = newY;
+
+        // Screen boundaries
+        if (Xomori - omori_htbx < 0) Xomori = omori_htbx;
+        if (Xomori + omori_htbx > width) Xomori = width - omori_htbx;
+        if (Yomori - omori_htbx < 0) Yomori = omori_htbx;
+        if (Yomori + omori_htbx > height) Yomori = height - omori_htbx;
     }
 
     drawOmori(Xomori, Yomori);
@@ -98,3 +161,9 @@ function stopMovement() {
 
 document.addEventListener("keydown", moveByKey);
 document.addEventListener("keyup", stopMovement);
+
+// Initial draw --------------------------------------------------------------------------
+
+omori.onload = () => {
+    drawOmori(Xomori, Yomori);
+};

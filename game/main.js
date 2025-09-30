@@ -11,14 +11,13 @@ let Yomori = height / 2;
 
 let moveSpeed = 5;
 
-// Hitboxes ------------------------------------------------------------------------------
-
 let omori_htbx = 20;
 
 // Sprite loading ------------------------------------------------------------------------
 
 const omori = new Image();
 omori.src = "sprites/omori/omStanding_F.png";
+
 const omoriRun = new Image();
 omoriRun.src = "sprites/omori/omRunning_F.png";
 
@@ -40,6 +39,12 @@ tissues.src = "sprites/tissuebox.png";
 const laptop = new Image();
 laptop.src = "sprites/laptop.png";
 
+// Initial draw --------------------------------------------------------------------------
+
+omori.onload = () => {
+    drawOmori(Xomori, Yomori);
+};
+
 // Object hitboxes -----------------------------------------------------------------------
 
 let objects = [
@@ -51,6 +56,16 @@ let objects = [
     { name: "lightbulb", x: 450, y: 0, width: 32, height: 32 }
 ];
 
+// Collision detection -------------------------------------------------------------------
+
+function isColliding(ax, ay, aw, ah, bx, by, bw, bh) {
+    return (
+        ax < bx + bw &&
+        ax + aw > bx &&
+        ay < by + bh &&
+        ay + ah > by
+    );
+}
 
 // Draw Omori and objects ----------------------------------------------------------------
 
@@ -92,16 +107,6 @@ function drawOmori(x, y) {
     drawHitboxes();
 }
 
-// Collision detection -------------------------------------------------------------------
-
-function isColliding(ax, ay, aw, ah, bx, by, bw, bh) {
-    return (
-        ax < bx + bw &&
-        ax + aw > bx &&
-        ay < by + bh &&
-        ay + ah > by
-    );
-}
 
 // Movement ------------------------------------------------------------------------------
 
@@ -175,10 +180,3 @@ function stopMovement() {
 
 document.addEventListener("keydown", moveByKey);
 document.addEventListener("keyup", stopMovement);
-
-// Initial draw --------------------------------------------------------------------------
-
-omori.onload = () => {
-    drawOmori(Xomori, Yomori);
-};
-

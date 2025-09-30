@@ -51,6 +51,16 @@ let objects = [
     { name: "lightbulb", x: 450, y: 0, width: 32, height: 32 }
 ];
 
+const walls = [
+    { x: 0, y: 0, width: width, height: 10 },                   
+    { x: 0, y: height - 10, width: width, height: 10 },         
+    { x: 0, y: 0, width: 10, height: height },                 
+    { x: width - 10, y: 0, width: 10, height: height }         
+];
+
+const obstacles = [...objects, ...walls];
+
+
 // Draw Omori and objects ----------------------------------------------------------------
 
 let currentOmori = omori;
@@ -167,3 +177,4 @@ document.addEventListener("keyup", stopMovement);
 omori.onload = () => {
     drawOmori(Xomori, Yomori);
 };
+

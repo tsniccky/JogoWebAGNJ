@@ -16,28 +16,28 @@ let player_htbx = 20;
 // Sprite loading ------------------------------------------------------------------------
 
 const player = new Image();
-player.src = "sprites/player/stickman.png";
+player.src = "sprites/omori/stickman.png";
 
 const playerRun = new Image();
-playerRun.src = "sprites/player/stickman.png";
+playerRun.src = "sprites/omori/stickman.png";
 
 const door = new Image();
-door.src = "sprites/door.png";
+door.src = "sprites/omori/door.png";
 
 const cat = new Image();
-cat.src = "sprites/cat.png";
+cat.src = "sprites/omori/cat.png";
 
 const lightbulb = new Image();
-lightbulb.src = "sprites/lightbulb.png";
+lightbulb.src = "sprites/omori/lightbulb.png";
 
 const sketchbook = new Image();
-sketchbook.src = "sprites/sketchbook.png";
+sketchbook.src = "sprites/omori/sketchbook.png";
 
 const tissues = new Image();
-tissues.src = "sprites/tissuebox.png";
+tissues.src = "sprites/omori/tissuebox.png";
 
 const laptop = new Image();
-laptop.src = "sprites/laptop.png";
+laptop.src = "sprites/omori/laptop.png";
 
 // Initial draw --------------------------------------------------------------------------
 

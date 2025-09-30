@@ -13,7 +13,7 @@ let moveSpeed = 5;
 
 // Hitboxes ------------------------------------------------------------------------------
 
-let omori_htbx = 28; // radius (half-size of hitbox)
+let omori_htbx = 28;
 
 // Sprite loading ------------------------------------------------------------------------
 
@@ -40,26 +40,16 @@ tissues.src = "sprites/tissuebox.png";
 const laptop = new Image();
 laptop.src = "sprites/laptop.png";
 
-// Object hitboxes (all centered) ---------------------------------------------------------
+// Object hitboxes -----------------------------------------------------------------------
 
 let objects = [
-    { name: "door", x: 350, y: 90, width: 60, height: 100 },
-    { name: "cat", x: 362, y: 447, width: 64, height: 64 },
-    { name: "sketchbook", x: 597, y: 177, width: 64, height: 64 },
-    { name: "tissues", x: 597, y: 362, width: 64, height: 64 },
-    { name: "laptop", x: 432, y: 187, width: 64, height: 64 },
-    { name: "lightbulb", x: 482, y: 32, width: 64, height: 64 }
+    { name: "door", x: 320, y: 40, width: 32, height: 50 },
+    { name: "cat", x: 330, y: 415, width: 32, height: 32 },
+    { name: "sketchbook", x: 565, y: 145, width: 32, height: 32 },
+    { name: "tissues", x: 565, y: 330, width: 32, height: 32 },
+    { name: "laptop", x: 400, y: 155, width: 32, height: 32 },
+    { name: "lightbulb", x: 450, y: 0, width: 32, height: 32 }
 ];
-
-const walls = [
-    { x: 0, y: 0, width: width, height: 10 },                   
-    { x: 0, y: height - 10, width: width, height: 10 },         
-    { x: 0, y: 0, width: 10, height: height },                 
-    { x: width - 10, y: 0, width: 10, height: height }         
-];
-
-const obstacles = [...objects, ...walls];
-
 
 // Draw Omori and objects ----------------------------------------------------------------
 
@@ -69,16 +59,13 @@ function drawOmori(x, y) {
     ctx.strokeRect(width / 2 - 150, height / 2 - 125, 300, 250);
 
     for (let obj of objects) {
-        let drawX = obj.x - obj.width / 2;
-        let drawY = obj.y - obj.height / 2;
-
         switch (obj.name) {
-            case "door": ctx.drawImage(door, drawX, drawY, obj.width, obj.height); break;
-            case "cat": ctx.drawImage(cat, drawX, drawY, obj.width, obj.height); break;
-            case "sketchbook": ctx.drawImage(sketchbook, drawX, drawY, obj.width, obj.height); break;
-            case "tissues": ctx.drawImage(tissues, drawX, drawY, obj.width, obj.height); break;
-            case "laptop": ctx.drawImage(laptop, drawX, drawY, obj.width, obj.height); break;
-            case "lightbulb": ctx.drawImage(lightbulb, drawX, drawY, obj.width, obj.height); break;
+            case "door": ctx.drawImage(door, obj.x, obj.y); break;
+            case "cat": ctx.drawImage(cat, obj.x, obj.y); break;
+            case "sketchbook": ctx.drawImage(sketchbook, obj.x, obj.y); break;
+            case "tissues": ctx.drawImage(tissues, obj.x, obj.y); break;
+            case "laptop": ctx.drawImage(laptop, obj.x, obj.y); break;
+            case "lightbulb": ctx.drawImage(lightbulb, obj.x, obj.y); break;
         }
     }
 
@@ -112,13 +99,21 @@ function moveByKey(event) {
     let newY = Yomori;
 
     switch (event.key) {
-        case "ArrowUp":    newY -= moveSpeed; break;
-        case "ArrowDown":  newY += moveSpeed; break;
-        case "ArrowLeft":  newX -= moveSpeed; break;
-        case "ArrowRight": newX += moveSpeed; break;
+        case "ArrowUp":
+            newY -= moveSpeed;
+            break;
+        case "ArrowDown":
+            newY += moveSpeed;
+            break;
+        case "ArrowLeft":
+            newX -= moveSpeed;
+            break;
+        case "ArrowRight":
+            newX += moveSpeed;
+            break;
     }
 
-    // Omori's bounding box
+    // Omori's bounding box for collision check
     let omoriBox = {
         x: newX - omori_htbx,
         y: newY - omori_htbx,
@@ -126,26 +121,21 @@ function moveByKey(event) {
         height: omori_htbx * 2
     };
 
-    // Check collisions with objects
+    // Check collision with all objects
     let blocked = false;
     for (let obj of objects) {
-        let objBox = {
-            x: obj.x - obj.width / 2,
-            y: obj.y - obj.height / 2,
-            width: obj.width,
-            height: obj.height
-        };
-
-        if (isColliding(
-            omoriBox.x, omoriBox.y, omoriBox.width, omoriBox.height,
-            objBox.x, objBox.y, objBox.width, objBox.height
-        )) {
+        if (
+            isColliding(
+                omoriBox.x, omoriBox.y, omoriBox.width, omoriBox.height,
+                obj.x, obj.y, obj.width, obj.height
+            )
+        ) {
             blocked = true;
             break;
         }
     }
 
-    // Apply movement if not blocked
+    // Only move if not blocked
     if (!blocked) {
         Xomori = newX;
         Yomori = newY;
@@ -177,4 +167,3 @@ document.addEventListener("keyup", stopMovement);
 omori.onload = () => {
     drawOmori(Xomori, Yomori);
 };
-

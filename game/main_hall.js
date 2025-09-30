@@ -16,10 +16,10 @@ let player_htbx = 20;
 // Sprite loading ------------------------------------------------------------------------
 
 const player = new Image();
-player.src = "sprites/omori/stickman.png";
+player.src = "sprites/stickman.png";
 
 const playerRun = new Image();
-playerRun.src = "sprites/omori/stickman.png";
+playerRun.src = "sprites/stickman.png";
 
 const door = new Image();
 door.src = "sprites/door.png";

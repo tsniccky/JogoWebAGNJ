@@ -22,22 +22,22 @@ const playerRun = new Image();
 playerRun.src = "sprites/omori/stickman.png";
 
 const door = new Image();
-door.src = "sprites/omori/door.png";
+door.src = "sprites/door.png";
 
 const cat = new Image();
-cat.src = "sprites/omori/cat.png";
+cat.src = "sprites/cat.png";
 
 const lightbulb = new Image();
-lightbulb.src = "sprites/omori/lightbulb.png";
+lightbulb.src = "sprites/lightbulb.png";
 
 const sketchbook = new Image();
-sketchbook.src = "sprites/omori/sketchbook.png";
+sketchbook.src = "sprites/sketchbook.png";
 
 const tissues = new Image();
-tissues.src = "sprites/omori/tissuebox.png";
+tissues.src = "sprites/tissuebox.png";
 
 const laptop = new Image();
-laptop.src = "sprites/omori/laptop.png";
+laptop.src = "sprites/laptop.png";
 
 // Initial draw --------------------------------------------------------------------------
 

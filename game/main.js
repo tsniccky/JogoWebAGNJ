@@ -43,11 +43,11 @@ laptop.src = "sprites/laptop.png";
 // Object hitboxes -----------------------------------------------------------------------
 
 let objects = [
-    { name: "door", x: 320, y: 40, width: 32, height: 50 },
+    { name: "door", x: 320, y: 40, width: 34, height: 52 },
     { name: "cat", x: 330, y: 415, width: 32, height: 32 },
-    { name: "sketchbook", x: 565, y: 145, width: 32, height: 32 },
+    { name: "sketchbook", x: 565, y: 145, width: 35, height: 35 },
     { name: "tissues", x: 565, y: 330, width: 32, height: 32 },
-    { name: "laptop", x: 400, y: 155, width: 32, height: 32 },
+    { name: "laptop", x: 400, y: 155, width: 37, height: 37 },
     { name: "lightbulb", x: 450, y: 0, width: 32, height: 32 }
 ];
 
@@ -181,3 +181,4 @@ document.addEventListener("keyup", stopMovement);
 omori.onload = () => {
     drawOmori(Xomori, Yomori);
 };
+

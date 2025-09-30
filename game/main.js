@@ -40,9 +40,16 @@ tissues.src = "sprites/tissuebox.png";
 const laptop = new Image();
 laptop.src = "sprites/laptop.png";
 
-omori.onload = () => {
-    drawOmori(Xomori, Yomori);
-};
+// Object hitboxes -----------------------------------------------------------------------
+
+let objects = [
+    { name: "door", x: 320, y: 40, width: 32, height: 50 },
+    { name: "cat", x: 330, y: 415, width: 32, height: 32 },
+    { name: "sketchbook", x: 565, y: 145, width: 32, height: 32 },
+    { name: "tissues", x: 565, y: 330, width: 32, height: 32 },
+    { name: "laptop", x: 400, y: 155, width: 32, height: 32 },
+    { name: "lightbulb", x: 450, y: 0, width: 32, height: 32 }
+];
 
 // Movement ------------------------------------------------------------------------------
 
@@ -67,25 +74,25 @@ function moveByKey(event) {
 
     switch (event.key) {
         case "ArrowUp":
-            if (!isColliding){
+            if (!isColliding(Yomori, objects)){
                 Yomori -= moveSpeed;
                 if (Yomori - omori_htbx < 0) {Yomori = 0 + omori_htbx};
             break;
         }
         case "ArrowDown":
-            if (!isColliding){
+            if (!isColliding(Yomori, objects)){
                 Yomori += moveSpeed;
                 if (Yomori + omori_htbx > height) {Yomori = height - omori_htbx};
                 break;
             }
         case "ArrowLeft":
-            if (!isColliding){
+            if (!isColliding(Xomori, objects)){
                 Xomori -= moveSpeed;
                 if (Xomori - omori_htbx < 0) {Xomori = 0 + omori_htbx};
                 break;
             }
         case "ArrowRight":
-            if (!isColliding){
+            if (!isColliding(Xomori, objects)){
                 Xomori += moveSpeed;
                 if (Xomori + omori_htbx > width) {Xomori = width - omori_htbx};
                 break;

@@ -1,41 +1,26 @@
 // Initial setup -------------------------------------------------------------------------
-
 let canvas = document.getElementById("Canvas");
 let ctx = canvas.getContext("2d");
-
 let width = canvas.width;
 let height = canvas.height;
-
 let Xomori = width / 2;
 let Yomori = height / 2;
-
 let moveSpeed = 5;
-
 let omori_htbx = 20;
-
-// Sprite loading ------------------------------------------------------------------------
-
 const omori = new Image();
 omori.src = "sprites/omori/omStanding_F.png";
-
 const omoriRun = new Image();
 omoriRun.src = "sprites/omori/omRunning_F.png";
-
 const door = new Image();
 door.src = "sprites/door.png";
-
 const cat = new Image();
 cat.src = "sprites/cat.png";
-
 const lightbulb = new Image();
 lightbulb.src = "sprites/lightbulb.png";
-
 const sketchbook = new Image();
 sketchbook.src = "sprites/sketchbook.png";
-
 const tissues = new Image();
 tissues.src = "sprites/tissuebox.png";
-
 const laptop = new Image();
 laptop.src = "sprites/laptop.png";
 
@@ -179,4 +164,110 @@ function stopMovement() {
 // Event listeners -----------------------------------------------------------------------
 
 document.addEventListener("keydown", moveByKey);
+document.addEventListener("keyup", stopMovement);
+
+// Door interaction - click to go to bathroom
+canvas.addEventListener("click", function(event) {
+    // Get click position relative to canvas
+    let rect = canvas.getBoundingClientRect();
+    let clickX = event.clientX - rect.left;
+    let clickY = event.clientY - rect.top;
+    
+    // Find the door object
+    let doorObj = objects.find(obj => obj.name === "door");
+    
+    if (doorObj) {
+        // Check if player is close to the door (within interaction range)
+        let interactionRange = 50; // pixels
+        let playerBox = {
+            x: Xomori - omori_htbx,
+            y: Yomori - omori_htbx,
+            width: omori_htbx * 2,
+            height: omori_htbx * 2
+        };
+        
+        // Calculate distance between player and door center
+        let doorCenterX = doorObj.x + doorObj.width / 2;
+        let doorCenterY = doorObj.y + doorObj.height / 2;
+        let playerCenterX = Xomori;
+        let playerCenterY = Yomori;
+        
+        let distance = Math.sqrt(
+            Math.pow(doorCenterX - playerCenterX, 2) + 
+            Math.pow(doorCenterY - playerCenterY, 2)
+        );
+        
+        // Check if click was on the door
+        let clickedOnDoor = (
+            clickX >= doorObj.x && 
+            clickX <= doorObj.x + doorObj.width &&
+            clickY >= doorObj.y && 
+            clickY <= doorObj.y + doorObj.height
+        );
+        
+        // If player is close enough and clicked on door, go to bathroom
+        if (clickedOnDoor && distance <= interactionRange) {
+            window.location.href = "bathroom.html";
+        }
+    }
+});
+        case "ArrowDown":
+            newY += moveSpeed;
+            break;
+        case "ArrowLeft":
+            newX -= moveSpeed;
+            break;
+        case "ArrowRight":
+            newX += moveSpeed;
+            break;
+    }
+
+    // Omori's bounding box for collision check
+    let omoriBox = {
+        x: newX - omori_htbx,
+        y: newY - omori_htbx,
+        width: omori_htbx * 2,
+        height: omori_htbx * 2
+    };
+
+    // Check collision with all objects
+    let blocked = false;
+    for (let obj of objects) {
+        if (
+            isColliding(
+                omoriBox.x, omoriBox.y, omoriBox.width, omoriBox.height,
+                obj.x, obj.y, obj.width, obj.height
+            )
+        ) {
+            blocked = true;
+            break;
+        }
+    }
+
+    // Only move if not blocked
+    if (!blocked) {
+        Xomori = newX;
+        Yomori = newY;
+
+        // Screen boundaries
+        if (Xomori - omori_htbx < 0) Xomori = omori_htbx;
+        if (Xomori + omori_htbx > width) Xomori = width - omori_htbx;
+        if (Yomori - omori_htbx < 0) Yomori = omori_htbx;
+        if (Yomori + omori_htbx > height) Yomori = height - omori_htbx;
+    }
+
+    drawOmori(Xomori, Yomori);
+    currentOmori = omori;
+}
+
+function stopMovement() {
+    currentOmori = omori;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawOmori(Xomori, Yomori);
+}
+
+// Event listeners -----------------------------------------------------------------------
+
+document.addEventListener("keydown", moveByKey);
+
 document.addEventListener("keyup", stopMovement);

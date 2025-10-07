@@ -84,7 +84,7 @@ function drawHitboxes() {
 
 
 function drawplayer(x, y) {
-    ctx.strokeRect(width / 2 - 150, height / 2 - 125, 300, 250);
+    ctx.strokeRect(width / 2 - 150, height / 2 - 125, 300, 400);
 
     for (let obj of objects) {
         switch (obj.name) {

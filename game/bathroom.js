@@ -52,8 +52,8 @@ omori.onload = () => {
 
 let objects = [
     { name: "door", x: 320, y: 91, width: 40, height: 58 },
-    { name: "plant2", x: 555, y: 280, width: 60, height: 60 },
-    { name: "plant", x: 320, y: 280, width: 60, height: 60 },
+    { name: "plant2", x: 555, y: 290, width: 50, height: 50 },
+    { name: "plant", x: 320, y: 290, width: 50, height: 50 },
     { name: "toilet", x: 550, y: 145, width: 60, height: 60},
     { name: "toiletpaper", x: 515, y: 150, width: 55, height: 55 },
      { name: "sink", x: 425, y: 145, width: 65, height: 45 },

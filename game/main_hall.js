@@ -1,77 +1,95 @@
 // Initial setup -------------------------------------------------------------------------
-
 let canvas = document.getElementById("Canvas");
 let ctx = canvas.getContext("2d");
-
 let width = canvas.width;
 let height = canvas.height;
-
-let Xplayer = width / 2;
-let Yplayer = height / 2;
-
+let Xomori = width / 2;
+let Yomori = height / 2;
 let moveSpeed = 5;
-let player_htbx = 20;
-let interactionRange = 60;
+let omori_htbx = 20;
 
-// Interaction state
-let nearbyObject = null;
-let showInteractionPrompt = false;
+// Sistema de áudio
+let musica = new Audio("musica.mp3"); // Arquivo chamado "musica.mp3"
+let audioStarted = false;
 
-// Object interaction states
-let objectStates = {
-    door: { interactions: 0, message: "A mysterious door..." },
-    cat: { interactions: 0, messages: ["Meow!", "The cat purrs...", "The cat seems happy!", "Meow meow!"] },
-    sketchbook: { interactions: 0, messages: ["A sketchbook full of drawings", "Beautiful artwork inside", "Someone is very creative!"] },
-    tissues: { interactions: 0, messages: ["A box of tissues", "Soft and comfortable", "You feel prepared for anything"] },
-    laptop: { interactions: 0, messages: ["A laptop computer", "The screen shows some code", "It's running smoothly"] },
-    lightbulb: { interactions: 0, messages: ["A bright lightbulb", "It illuminates the room", "Energy efficient!"] }
-};
+// Sistema de diálogo
+let dialogActive = false;
+let currentDialog = "";
+let dialogText = "";
+let currentChar = 0;
+let typingSpeed = 30;
+let dialogTimer = 0;
 
-// Sprite loading ------------------------------------------------------------------------
-
-const player = new Image();
-player.src = "sprites/stickman.png";
-
-const playerRun = new Image();
-playerRun.src = "sprites/stickman.png";
-
+const omori = new Image();
+omori.src = "sprites/omori/omStanding_F.png";
+const omoriRun = new Image();
+omoriRun.src = "sprites/omori/omRunning_F.png";
 const door = new Image();
 door.src = "sprites/door.png";
-
 const cat = new Image();
 cat.src = "sprites/cat.png";
-
 const lightbulb = new Image();
 lightbulb.src = "sprites/lightbulb.png";
-
 const sketchbook = new Image();
 sketchbook.src = "sprites/sketchbook.png";
-
 const tissues = new Image();
 tissues.src = "sprites/tissuebox.png";
-
 const laptop = new Image();
 laptop.src = "sprites/laptop.png";
 
-// Initial draw --------------------------------------------------------------------------
+// Configurar música
+function setupMusica() {
+    // Configurações da música
+    musica.loop = true; // Fazer loop infinito
+    musica.volume = 0.5; // Volume em 50%
+    
+    // Política de autoplay - só inicia após interação do usuário
+    document.addEventListener('click', startMusica, { once: true });
+    document.addEventListener('keydown', startMusica, { once: true });
+}
 
-player.onload = () => {
-    drawplayer(Xplayer, Yplayer);
+function startMusica() {
+    if (!audioStarted) {
+        musica.play().catch(error => {
+            console.log("Erro ao reproduzir música:", error);
+        });
+        audioStarted = true;
+    }
+}
+
+// Funções para controlar a música
+function pausarMusica() {
+    musica.pause();
+}
+
+function continuarMusica() {
+    if (audioStarted) {
+        musica.play();
+    }
+}
+
+function ajustarVolume(volume) {
+    // Volume entre 0.0 e 1.0
+    musica.volume = Math.max(0, Math.min(1, volume));
+}
+
+// Initial draw --------------------------------------------------------------------------
+omori.onload = () => {
+    drawOmori(Xomori, Yomori);
+    setupMusica(); // Configurar música quando o jogo carregar
 };
 
 // Object hitboxes -----------------------------------------------------------------------
-
 let objects = [
-    { name: "door", x: 320, y: 40, width: 34, height: 52, interactable: true },
-    { name: "cat", x: 330, y: 415, width: 32, height: 32, interactable: true },
-    { name: "sketchbook", x: 565, y: 145, width: 35, height: 35, interactable: true },
-    { name: "tissues", x: 565, y: 330, width: 32, height: 32, interactable: true },
-    { name: "laptop", x: 400, y: 155, width: 37, height: 37, interactable: true },
-    { name: "lightbulb", x: 450, y: 0, width: 32, height: 32, interactable: true }
+    { name: "door", x: 320, y: 40, width: 34, height: 52 },
+    { name: "cat", x: 330, y: 415, width: 32, height: 32 },
+    { name: "sketchbook", x: 565, y: 145, width: 35, height: 35 },
+    { name: "tissues", x: 565, y: 330, width: 32, height: 32 },
+    { name: "laptop", x: 400, y: 155, width: 37, height: 37 },
+    { name: "lightbulb", x: 450, y: 0, width: 32, height: 32 }
 ];
 
 // Collision detection -------------------------------------------------------------------
-
 function isColliding(ax, ay, aw, ah, bx, by, bw, bh) {
     return (
         ax < bx + bw &&
@@ -81,69 +99,124 @@ function isColliding(ax, ay, aw, ah, bx, by, bw, bh) {
     );
 }
 
-function getDistance(x1, y1, x2, y2) {
-    return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+// Sistema de Diálogo no estilo Omori ----------------------------------------------------
+function showDialog(text) {
+    dialogActive = true;
+    currentDialog = text;
+    dialogText = "";
+    currentChar = 0;
+    dialogTimer = 0;
 }
 
-function findNearbyObject() {
-    for (let obj of objects) {
-        if (!obj.interactable) continue;
+function updateDialog() {
+    if (!dialogActive) return;
+    
+    dialogTimer++;
+    if (dialogTimer >= typingSpeed && currentChar < currentDialog.length) {
+        dialogText += currentDialog[currentChar];
+        currentChar++;
+        dialogTimer = 0;
+    }
+}
+
+function drawDialog() {
+    if (!dialogActive) return;
+    
+    // Caixa de diálogo - estilo Omori (preto e branco)
+    const dialogWidth = width - 100;
+    const dialogHeight = 120;
+    const dialogX = 50;
+    const dialogY = height - dialogHeight - 30;
+    
+    // Fundo da caixa de diálogo (preto com borda branca)
+    ctx.fillStyle = 'black';
+    ctx.fillRect(dialogX, dialogY, dialogWidth, dialogHeight);
+    
+    // Borda branca
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 3;
+    ctx.strokeRect(dialogX, dialogY, dialogWidth, dialogHeight);
+    
+    // Linha divisória
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(dialogX + 10, dialogY + 30);
+    ctx.lineTo(dialogX + dialogWidth - 10, dialogY + 30);
+    ctx.stroke();
+    
+    // Texto do diálogo
+    ctx.fillStyle = 'white';
+    ctx.font = '16px "Courier New", monospace';
+    ctx.textAlign = 'left';
+    
+    // Quebra de texto para caber na caixa
+    const maxWidth = dialogWidth - 40;
+    const lineHeight = 20;
+    let lines = [];
+    let currentLine = '';
+    
+    for (let char of dialogText) {
+        const testLine = currentLine + char;
+        const metrics = ctx.measureText(testLine);
         
-        let objCenterX = obj.x + obj.width / 2;
-        let objCenterY = obj.y + obj.height / 2;
-        let distance = getDistance(Xplayer, Yplayer, objCenterX, objCenterY);
-        
-        if (distance <= interactionRange) {
-            return obj;
+        if (metrics.width > maxWidth && currentLine.length > 0) {
+            lines.push(currentLine);
+            currentLine = char;
+        } else {
+            currentLine = testLine;
         }
     }
-    return null;
+    lines.push(currentLine);
+    
+    // Desenhar linhas de texto
+    for (let i = 0; i < Math.min(lines.length, 3); i++) {
+        ctx.fillText(lines[i], dialogX + 20, dialogY + 60 + (i * lineHeight));
+    }
+    
+    // Indicador de continuar (piscante)
+    if (currentChar >= currentDialog.length) {
+        if (Math.floor(dialogTimer / 30) % 2 === 0) {
+            ctx.fillText("▼", dialogX + dialogWidth - 30, dialogY + dialogHeight - 15);
+        }
+    }
 }
 
-// Draw player and objects ----------------------------------------------------------------
+function handleDialogInput(event) {
+    if (!dialogActive) return;
+    
+    if (event.key === " " || event.key === "Enter" || event.key === "Escape") {
+        if (currentChar < currentDialog.length) {
+            // Pular animação de digitação
+            dialogText = currentDialog;
+            currentChar = currentDialog.length;
+        } else {
+            // Fechar diálogo
+            dialogActive = false;
+            // Redesenhar a cena
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawOmori(Xomori, Yomori);
+        }
+    }
+}
 
-let currentplayer = player;
+// Draw Omori and objects ----------------------------------------------------------------
+let currentOmori = omori;
 
 function drawHitboxes() {
     ctx.strokeStyle = 'red';
-    ctx.lineWidth = 1;
     for (let obj of objects) {
         ctx.strokeRect(obj.x, obj.y, obj.width, obj.height);
     }
     
-    // Player hitbox
+    // Hitbox do Omori
     ctx.strokeStyle = 'blue';
-    ctx.strokeRect(Xplayer - player_htbx, Yplayer - player_htbx, player_htbx * 2, player_htbx * 2);
+    ctx.strokeRect(Xomori - omori_htbx, Yomori - omori_htbx, omori_htbx * 2, omori_htbx * 2);
 }
 
-function drawInteractionPrompt() {
-    if (showInteractionPrompt && nearbyObject) {
-        // Draw prompt background
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-        ctx.fillRect(width / 2 - 80, height - 60, 160, 40);
-        
-        // Draw prompt text
-        ctx.fillStyle = 'white';
-        ctx.font = '16px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText('Press E to interact', width / 2, height - 35);
-        
-        // Highlight nearby object
-        if (nearbyObject) {
-            ctx.strokeStyle = 'yellow';
-            ctx.lineWidth = 3;
-            ctx.strokeRect(nearbyObject.x - 2, nearbyObject.y - 2, nearbyObject.width + 4, nearbyObject.height + 4);
-        }
-    }
-}
-
-function drawplayer(x, y) {
-    // Draw room boundary
-    ctx.strokeStyle = 'black';
-    ctx.lineWidth = 2;
+function drawOmori(x, y) {
     ctx.strokeRect(width / 2 - 150, height / 2 - 125, 300, 250);
 
-    // Draw all objects
     for (let obj of objects) {
         switch (obj.name) {
             case "door": ctx.drawImage(door, obj.x, obj.y, obj.width, obj.height); break;
@@ -155,31 +228,27 @@ function drawplayer(x, y) {
         }
     }
 
-    // Draw player
     ctx.drawImage(
-        currentplayer,
-        x - player_htbx,
-        y - player_htbx,
-        player_htbx * 2,
-        player_htbx * 2
+        currentOmori,
+        x - omori_htbx,
+        y - omori_htbx,
+        omori_htbx * 2,
+        omori_htbx * 2
     );
     
-    // Draw hitboxes (for debugging - can be removed)
-    // drawHitboxes();
-    
-    // Draw interaction prompt
-    drawInteractionPrompt();
+    drawHitboxes();
+    drawDialog();
 }
 
-
 // Movement ------------------------------------------------------------------------------
-
 function moveByKey(event) {
+    if (dialogActive) return;
+    
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    currentplayer = playerRun;
+    currentOmori = omoriRun;
 
-    let newX = Xplayer;
-    let newY = Yplayer;
+    let newX = Xomori;
+    let newY = Yomori;
 
     switch (event.key) {
         case "ArrowUp":
@@ -194,25 +263,25 @@ function moveByKey(event) {
         case "ArrowRight":
             newX += moveSpeed;
             break;
-        default:
-            return; // Exit if key isn't an arrow key
     }
 
-    // Player's bounding box for collision check
-    let playerBox = {
-        x: newX - player_htbx,
-        y: newY - player_htbx,
-        width: player_htbx * 2,
-        height: player_htbx * 2
+    // Omori's bounding box for collision check
+    let omoriBox = {
+        x: newX - omori_htbx,
+        y: newY - omori_htbx,
+        width: omori_htbx * 2,
+        height: omori_htbx * 2
     };
 
     // Check collision with all objects
     let blocked = false;
     for (let obj of objects) {
-        if (isColliding(
-            playerBox.x, playerBox.y, playerBox.width, playerBox.height,
-            obj.x, obj.y, obj.width, obj.height
-        )) {
+        if (
+            isColliding(
+                omoriBox.x, omoriBox.y, omoriBox.width, omoriBox.height,
+                obj.x, obj.y, obj.width, obj.height
+            )
+        ) {
             blocked = true;
             break;
         }
@@ -220,176 +289,97 @@ function moveByKey(event) {
 
     // Only move if not blocked
     if (!blocked) {
-        Xplayer = newX;
-        Yplayer = newY;
+        Xomori = newX;
+        Yomori = newY;
 
         // Screen boundaries
-        if (Xplayer - player_htbx < 0) Xplayer = player_htbx;
-        if (Xplayer + player_htbx > width) Xplayer = width - player_htbx;
-        if (Yplayer - player_htbx < 0) Yplayer = player_htbx;
-        if (Yplayer + player_htbx > height) Yplayer = height - player_htbx;
+        if (Xomori - omori_htbx < 0) Xomori = omori_htbx;
+        if (Xomori + omori_htbx > width) Xomori = width - omori_htbx;
+        if (Yomori - omori_htbx < 0) Yomori = omori_htbx;
+        if (Yomori + omori_htbx > height) Yomori = height - omori_htbx;
     }
 
-    // Check for nearby objects
-    nearbyObject = findNearbyObject();
-    showInteractionPrompt = nearbyObject !== null;
-
-    drawplayer(Xplayer, Yplayer);
+    drawOmori(Xomori, Yomori);
+    currentOmori = omori;
 }
 
-function stopMovement(event) {
-    // Only change sprite on arrow key release
-    if (event.key.startsWith("Arrow")) {
-        currentplayer = player;
+function stopMovement() {
+    currentOmori = omori;
+    if (!dialogActive) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        drawplayer(Xplayer, Yplayer);
+        drawOmori(Xomori, Yomori);
     }
 }
 
-// Object interaction --------------------------------------------------------------------
-
-function handleObjectInteraction(objectName) {
-    let state = objectStates[objectName];
-    if (!state) return;
-    
-    state.interactions++;
-    
-    let message = "";
+// Interações com objetos ----------------------------------------------------------------
+function handleObjectClick(objectName) {
+    if (dialogActive) return;
     
     switch (objectName) {
         case "door":
-            // Special case - door leads to bathroom
-            if (confirm("Do you want to go to the bathroom?")) {
-                window.location.href = "banheiro.html";
-            }
-            return;
-            
-        case "cat":
-        case "sketchbook":
-        case "tissues":
-        case "laptop":
-        case "lightbulb":
-            if (state.messages) {
-                let messageIndex = (state.interactions - 1) % state.messages.length;
-                message = state.messages[messageIndex];
-            } else {
-                message = state.message;
-            }
+            showDialog("A porta está trancada... Talvez eu deva terminar minhas tarefas primeiro.");
             break;
-    }
-    
-    // Display message in a custom dialog
-    showMessageDialog(objectName, message);
-}
-
-function showMessageDialog(objectName, message) {
-    // Create overlay
-    let overlay = document.createElement('div');
-    overlay.style.position = 'fixed';
-    overlay.style.top = '0';
-    overlay.style.left = '0';
-    overlay.style.width = '100%';
-    overlay.style.height = '100%';
-    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
-    overlay.style.display = 'flex';
-    overlay.style.justifyContent = 'center';
-    overlay.style.alignItems = 'center';
-    overlay.style.zIndex = '1000';
-    
-    // Create dialog box
-    let dialog = document.createElement('div');
-    dialog.style.backgroundColor = 'white';
-    dialog.style.padding = '30px';
-    dialog.style.borderRadius = '10px';
-    dialog.style.border = '3px solid black';
-    dialog.style.maxWidth = '400px';
-    dialog.style.textAlign = 'center';
-    dialog.style.fontFamily = "'Courier New', Courier, monospace";
-    
-    // Title
-    let title = document.createElement('h2');
-    title.textContent = objectName.charAt(0).toUpperCase() + objectName.slice(1);
-    title.style.marginTop = '0';
-    
-    // Message
-    let messageText = document.createElement('p');
-    messageText.textContent = message;
-    messageText.style.fontSize = '16px';
-    
-    // Close button
-    let closeButton = document.createElement('button');
-    closeButton.textContent = 'Close';
-    closeButton.style.padding = '10px 20px';
-    closeButton.style.fontSize = '16px';
-    closeButton.style.cursor = 'pointer';
-    closeButton.style.fontFamily = "'Courier New', Courier, monospace";
-    closeButton.style.border = '2px solid black';
-    closeButton.style.backgroundColor = '#f0f0f0';
-    closeButton.style.marginTop = '10px';
-    
-    closeButton.onclick = function() {
-        document.body.removeChild(overlay);
-    };
-    
-    // Assemble dialog
-    dialog.appendChild(title);
-    dialog.appendChild(messageText);
-    dialog.appendChild(closeButton);
-    overlay.appendChild(dialog);
-    document.body.appendChild(overlay);
-    
-    // Allow closing with Enter or Escape
-    overlay.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' || e.key === 'Escape') {
-            document.body.removeChild(overlay);
-        }
-    });
-    
-    // Focus on the overlay so keydown works
-    overlay.tabIndex = 0;
-    overlay.focus();
-}
-
-function handleKeyPress(event) {
-    // Handle interaction key (E or Enter)
-    if ((event.key === 'e' || event.key === 'E' || event.key === 'Enter') && nearbyObject) {
-        handleObjectInteraction(nearbyObject.name);
+        case "cat":
+            showDialog("Mewo parece feliz em me ver. Ela ronrona suavemente.");
+            break;
+        case "sketchbook":
+            showDialog("Meus desenhos... Eles me trazem memórias confusas.");
+            break;
+        case "tissues":
+            showDialog("Sempre bom ter lenços por perto. Nunca se sabe quando vou precisar.");
+            break;
+        case "laptop":
+            showDialog("O laptop está desligado. Melhor não mexer agora.");
+            break;
+        case "lightbulb":
+            showDialog("A luz está um pouco fraca... Assim como tudo aqui.");
+            break;
     }
 }
 
 // Event listeners -----------------------------------------------------------------------
-
 document.addEventListener("keydown", function(event) {
-    moveByKey(event);
-    handleKeyPress(event);
+    if (dialogActive) {
+        handleDialogInput(event);
+    } else {
+        moveByKey(event);
+    }
 });
 
 document.addEventListener("keyup", stopMovement);
 
-// Mouse interaction - click on nearby object
+// Door interaction
 canvas.addEventListener("click", function(event) {
-    if (nearbyObject) {
-        handleObjectInteraction(nearbyObject.name);
-    }
-});
-
-// Change cursor when hovering over nearby interactable objects
-canvas.addEventListener("mousemove", function(event) {
-    const rect = canvas.getBoundingClientRect();
-    const mouseX = event.clientX - rect.left;
-    const mouseY = event.clientY - rect.top;
+    if (dialogActive) return;
     
-    let isOverNearbyObject = false;
+    // Get click position relative to canvas
+    let rect = canvas.getBoundingClientRect();
+    let clickX = event.clientX - rect.left;
+    let clickY = event.clientY - rect.top;
     
-    if (nearbyObject) {
-        if (mouseX >= nearbyObject.x && 
-            mouseX <= nearbyObject.x + nearbyObject.width &&
-            mouseY >= nearbyObject.y && 
-            mouseY <= nearbyObject.y + nearbyObject.height) {
-            isOverNearbyObject = true;
+    // Check if clicked on any object
+    for (let obj of objects) {
+        if (
+            clickX >= obj.x && 
+            clickX <= obj.x + obj.width &&
+            clickY >= obj.y && 
+            clickY <= obj.y + obj.height
+        ) {
+            handleObjectClick(obj.name);
+            return;
         }
     }
-    
-    canvas.style.cursor = isOverNearbyObject ? "pointer" : "default";
 });
 
+// Game loop para atualizar diálogo
+function gameLoop() {
+    updateDialog();
+    if (dialogActive) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawOmori(Xomori, Yomori);
+    }
+    requestAnimationFrame(gameLoop);
+}
+
+// Iniciar game loop
+gameLoop();

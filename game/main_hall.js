@@ -6,8 +6,8 @@ let ctx = canvas.getContext("2d");
 let width = canvas.width;
 let height = canvas.height;
 
-let Xplayer = width / 2;
-let Yplayer = height / 2;
+let Xplayer = 570;
+let Yplayer = 400;
 
 let moveSpeed = 5;
 let player_htbx = 20;
@@ -23,7 +23,7 @@ let objectStates = {
     cat: { interactions: 0, messages: ["Meow!", "The cat purrs...", "The cat seems happy!", "Meow meow!"] },
     sketchbook: { interactions: 0, messages: ["A sketchbook full of drawings", "Beautiful artwork inside", "Someone is very creative!"] },
     tissues: { interactions: 0, messages: ["A box of tissues", "Soft and comfortable", "You feel prepared for anything"] },
-    laptop: { interactions: 0, messages: ["A laptop computer", "The screen shows some code", "It's running smoothly"] },
+    television: { interactions: 0, messages: ["A television", "The screen is static", "It won't turn on"] },
     lightbulb: { interactions: 0, messages: ["A bright lightbulb", "It illuminates the room", "Energy efficient!"] }
 };
 
@@ -53,8 +53,8 @@ sketchbook.src = "sprites/sketchbook.png";
 const tissues = new Image();
 tissues.src = "sprites/tissuebox.png";
 
-const laptop = new Image();
-laptop.src = "sprites/laptop.png";
+const television = new Image();
+television.src = "sprites/laptop.png";
 
 // Initial draw --------------------------------------------------------------------------
 
@@ -68,14 +68,17 @@ let objects = [
     { name: "door1", x: 650, y: 10, width: 34, height: 52, interactable: true },
     { name: "door2", x: 203, y: 430, width: 34, height: 52, interactable: true },
     { name: "door3", x: 203, y: 60, width: 34, height: 52, interactable: true },
-    { name: "table1", x: 630, y: 100, width: 100, height: 50, interactable: true },
-    { name: "table2", x: 630, y: 225, width: 100, height: 50, interactable: true },
-    { name: "table3", x: 630, y: 350, width: 100, height: 50, interactable: true },
+    { name: "table1", x: 630, y: 100, width: 100, height: 50 },
+    { name: "table2", x: 630, y: 225, width: 100, height: 50 },
+    { name: "table3", x: 630, y: 350, width: 100, height: 50 },
+    { name: "counter", x: 330, y: 200, width: 50, height: 140 },
+    { name: "side-counter1", x: 230, y: 150, width: 150, height: 50 },
+    { name: "side-counter2", x: 230, y: 340, width: 150, height: 50 },
     { name: "doorBlue", x: 555, y: 460, width: 34, height: 52, interactable: true },
-    { name: "cat", x: 330, y: 415, width: 32, height: 32, interactable: true },
-    { name: "sketchbook", x: 565, y: 145, width: 35, height: 35, interactable: true },
-    { name: "tissues", x: 565, y: 330, width: 32, height: 32, interactable: true },
-    { name: "laptop", x: 400, y: 155, width: 37, height: 37, interactable: true },
+    { name: "cat", x: 633, y: 315, width: 32, height: 32, interactable: true },
+    { name: "sketchbook", x: 340, y: 210, width: 35, height: 35, interactable: true },
+    { name: "tissues", x: 340, y: 300, width: 32, height: 32, interactable: true },
+    { name: "television", x: 250, y: 155, width: 37, height: 37, interactable: true },
     { name: "lightbulb", x: 450, y: 0, width: 32, height: 32, interactable: true }
 ];
 
@@ -161,11 +164,14 @@ function drawplayer(x, y) {
             case "table1": ctx.strokeRect(obj.x, obj.y, obj.width, obj.height); break;
             case "table2": ctx.strokeRect(obj.x, obj.y, obj.width, obj.height); break;
             case "table3": ctx.strokeRect(obj.x, obj.y, obj.width, obj.height); break;
+            case "counter": ctx.strokeRect(obj.x, obj.y, obj.width, obj.height); break;
+            case "side-counter1": ctx.strokeRect(obj.x, obj.y, obj.width, obj.height); break;
+            case "side-counter2": ctx.strokeRect(obj.x, obj.y, obj.width, obj.height); break;
             case "doorBlue": ctx.drawImage(door_blue, obj.x, obj.y, obj.width, obj.height); break;
             case "cat": ctx.drawImage(cat, obj.x, obj.y, obj.width, obj.height); break;
             case "sketchbook": ctx.drawImage(sketchbook, obj.x, obj.y, obj.width, obj.height); break;
             case "tissues": ctx.drawImage(tissues, obj.x, obj.y, obj.width, obj.height); break;
-            case "laptop": ctx.drawImage(laptop, obj.x, obj.y, obj.width, obj.height); break;
+            case "television": ctx.drawImage(television, obj.x, obj.y, obj.width, obj.height); break;
             case "lightbulb": ctx.drawImage(lightbulb, obj.x, obj.y, obj.width, obj.height); break;
         }
     }
@@ -179,7 +185,7 @@ function drawplayer(x, y) {
         player_htbx * 2
     );
     
-    drawHitboxes();
+    //drawHitboxes();
     
     // Draw interaction prompt
     drawInteractionPrompt();
@@ -210,7 +216,9 @@ function moveByKey(event) {
             newX += moveSpeed;
             break;
         default:
-            return; // Exit if key isn't an arrow key
+            newY = Yplayer;
+            newX = Xplayer;
+            break; // Exit if key isn't an arrow key
     }
 
     // Player's bounding box for collision check
@@ -283,7 +291,7 @@ function handleObjectInteraction(objectName) {
         case "cat":
         case "sketchbook":
         case "tissues":
-        case "laptop":
+        case "television":
         case "lightbulb":
             if (state.messages) {
                 let messageIndex = (state.interactions - 1) % state.messages.length;
@@ -408,4 +416,3 @@ canvas.addEventListener("mousemove", function(event) {
     
     canvas.style.cursor = isOverNearbyObject ? "pointer" : "default";
 });
-

@@ -64,7 +64,7 @@ let objects = [
     /*{ name: "plant2", x: 555, y: 290, width: 50, height: 50 },/*/
     /*{ name: "plant", x: 550, y: 200, width: 50, height: 50 },/*/
     { name: "saco2", x: 550, y: 290, width: 60, height: 60},
-    { name: "saco1", x: 550, y: 155, width: 55, height: 55 },
+    { name: "saco1", x: 550, y: 150, width: 55, height: 55 },
      { name: "saco3", x: 380, y: 285, width: 45, height: 45 },
      { name: "counter1", x: 385, y: 140, width: 60, height: 60},
       { name: "counter3", x: 350, y: 285, width: 75, height: 60},

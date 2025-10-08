@@ -179,11 +179,11 @@ function drawplayer(x, y) {
         player_htbx * 2
     );
     
-    // Draw hitboxes (for debugging - can be removed)
-    // drawHitboxes();
+    drawHitboxes();
     
     // Draw interaction prompt
     drawInteractionPrompt();
+
 }
 
 

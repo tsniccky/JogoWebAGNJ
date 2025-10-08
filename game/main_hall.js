@@ -250,6 +250,7 @@ function moveByKey(event) {
     showInteractionPrompt = nearbyObject !== null;
 
     drawplayer(Xplayer, Yplayer);
+    currentplayer = player;
 }
 
 function stopMovement(event) {
@@ -407,3 +408,4 @@ canvas.addEventListener("mousemove", function(event) {
     
     canvas.style.cursor = isOverNearbyObject ? "pointer" : "default";
 });
+

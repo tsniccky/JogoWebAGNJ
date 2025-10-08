@@ -19,7 +19,7 @@ let showInteractionPrompt = false;
 
 // Object interaction states
 let objectStates = {
-    door: { interactions: 0, message: "A mysterious door..." },
+    door1: { interactions: 0, message: "A mysterious door..." },
     cat: { interactions: 0, messages: ["Meow!", "The cat purrs...", "The cat seems happy!", "Meow meow!"] },
     sketchbook: { interactions: 0, messages: ["A sketchbook full of drawings", "Beautiful artwork inside", "Someone is very creative!"] },
     tissues: { interactions: 0, messages: ["A box of tissues", "Soft and comfortable", "You feel prepared for anything"] },
@@ -35,8 +35,11 @@ player.src = "sprites/stickman.png";
 const playerRun = new Image();
 playerRun.src = "sprites/stickman.png";
 
-const door = new Image();
-door.src = "sprites/door.png";
+const door1 = new Image();
+door1.src = "sprites/door.png";
+
+const door_blue = new Image();
+door_blue.src = "sprites/door_blue.png";
 
 const cat = new Image();
 cat.src = "sprites/cat.png";
@@ -62,7 +65,13 @@ player.onload = () => {
 // Object hitboxes -----------------------------------------------------------------------
 
 let objects = [
-    { name: "door", x: 320, y: 40, width: 34, height: 52, interactable: true },
+    { name: "door1", x: 650, y: 10, width: 34, height: 52, interactable: true },
+    { name: "door2", x: 203, y: 430, width: 34, height: 52, interactable: true },
+    { name: "door3", x: 203, y: 60, width: 34, height: 52, interactable: true },
+    { name: "table1", x: 630, y: 100, width: 100, height: 50, interactable: true },
+    { name: "table2", x: 630, y: 225, width: 100, height: 50, interactable: true },
+    { name: "table3", x: 630, y: 350, width: 100, height: 50, interactable: true },
+    { name: "doorBlue", x: 555, y: 460, width: 34, height: 52, interactable: true },
     { name: "cat", x: 330, y: 415, width: 32, height: 32, interactable: true },
     { name: "sketchbook", x: 565, y: 145, width: 35, height: 35, interactable: true },
     { name: "tissues", x: 565, y: 330, width: 32, height: 32, interactable: true },
@@ -141,12 +150,18 @@ function drawplayer(x, y) {
     // Draw room boundary
     ctx.strokeStyle = 'black';
     ctx.lineWidth = 2;
-    ctx.strokeRect(width / 2 - 150, height / 2 - 125, 300, 250);
+    ctx.strokeRect(width / 2 - 250, height / 2 - 230, 500, 460);
 
     // Draw all objects
     for (let obj of objects) {
         switch (obj.name) {
-            case "door": ctx.drawImage(door, obj.x, obj.y, obj.width, obj.height); break;
+            case "door1": ctx.drawImage(door1, obj.x, obj.y, obj.width, obj.height); break;
+            case "door2": ctx.drawImage(door1, obj.x, obj.y, obj.width, obj.height); break;
+            case "door3": ctx.drawImage(door1, obj.x, obj.y, obj.width, obj.height); break;
+            case "table1": ctx.strokeRect(obj.x, obj.y, obj.width, obj.height); break;
+            case "table2": ctx.strokeRect(obj.x, obj.y, obj.width, obj.height); break;
+            case "table3": ctx.strokeRect(obj.x, obj.y, obj.width, obj.height); break;
+            case "doorBlue": ctx.drawImage(door_blue, obj.x, obj.y, obj.width, obj.height); break;
             case "cat": ctx.drawImage(cat, obj.x, obj.y, obj.width, obj.height); break;
             case "sketchbook": ctx.drawImage(sketchbook, obj.x, obj.y, obj.width, obj.height); break;
             case "tissues": ctx.drawImage(tissues, obj.x, obj.y, obj.width, obj.height); break;
@@ -257,8 +272,8 @@ function handleObjectInteraction(objectName) {
     let message = "";
     
     switch (objectName) {
-        case "door":
-            // Special case - door leads to bathroom
+        case "door1":
+            // Special case - door1 leads to bathroom
             if (confirm("Do you want to go to the bathroom?")) {
                 window.location.href = "banheiro.html";
             }

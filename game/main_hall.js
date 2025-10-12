@@ -6,8 +6,8 @@ let ctx = canvas.getContext("2d");
 let width = canvas.width;
 let height = canvas.height;
 
-let Xplayer = 570;
-let Yplayer = 400;
+let Xplayer = 290;
+let Yplayer = 260;
 
 let moveSpeed = 5;
 let player_htbx = 20;
@@ -21,10 +21,11 @@ let showInteractionPrompt = false;
 let objectStates = {
     door1: { interactions: 0, message: "A mysterious door..." },
     cat: { interactions: 0, messages: ["Meow!", "The cat purrs...", "The cat seems happy!", "Meow meow!"] },
-    sketchbook: { interactions: 0, messages: ["A sketchbook full of drawings", "Beautiful artwork inside", "Someone is very creative!"] },
+    sketchbook: { interactions: 0, messages: ["A sketchbook full of drawings", "Beautiful artwork inside", "The book is on the table"] },
     tissues: { interactions: 0, messages: ["A box of tissues", "Soft and comfortable", "You feel prepared for anything"] },
     television: { interactions: 0, messages: ["A television", "The screen is static", "It won't turn on"] },
-    lightbulb: { interactions: 0, messages: ["A bright lightbulb", "It illuminates the room", "Energy efficient!"] }
+    lightbulb: { interactions: 0, messages: ["A bright lightbulb", "It illuminates the room", "Energy efficient!"] },
+    waiter: { interactions: 0, messages: ["...", "The Waiter keeps silent", "He stares at you"] }
 };
 
 // Sprite loading ------------------------------------------------------------------------
@@ -71,15 +72,16 @@ let objects = [
     { name: "table1", x: 630, y: 100, width: 100, height: 50 },
     { name: "table2", x: 630, y: 225, width: 100, height: 50 },
     { name: "table3", x: 630, y: 350, width: 100, height: 50 },
-    { name: "counter", x: 330, y: 200, width: 50, height: 140 },
+    { name: "counter", x: 330, y: 200, width: 30, height: 140 },
     { name: "side-counter1", x: 230, y: 150, width: 150, height: 50 },
     { name: "side-counter2", x: 230, y: 340, width: 150, height: 50 },
     { name: "doorBlue", x: 555, y: 460, width: 34, height: 52, interactable: true },
     { name: "cat", x: 633, y: 315, width: 32, height: 32, interactable: true },
-    { name: "sketchbook", x: 340, y: 210, width: 35, height: 35, interactable: true },
-    { name: "tissues", x: 340, y: 300, width: 32, height: 32, interactable: true },
+    { name: "sketchbook", x: 330, y: 201, width: 25, height: 25, interactable: true },
+    { name: "tissues", x: 330, y: 310, width: 25, height: 25, interactable: true },
     { name: "television", x: 250, y: 155, width: 37, height: 37, interactable: true },
-    { name: "lightbulb", x: 450, y: 0, width: 32, height: 32, interactable: true }
+    { name: "lightbulb", x: 450, y: 0, width: 32, height: 32, interactable: true },
+    { name: "waiter", x: 310, y: 260, width: 20, height: 20, interactable: true }
 ];
 
 // Collision detection -------------------------------------------------------------------
@@ -173,6 +175,20 @@ function drawplayer(x, y) {
             case "tissues": ctx.drawImage(tissues, obj.x, obj.y, obj.width, obj.height); break;
             case "television": ctx.drawImage(television, obj.x, obj.y, obj.width, obj.height); break;
             case "lightbulb": ctx.drawImage(lightbulb, obj.x, obj.y, obj.width, obj.height); break;
+            case "waiter":
+    ctx.beginPath();
+
+    // Calculate the center of the hitbox
+    const centerX = obj.x + obj.width / 2;
+    const centerY = obj.y + obj.height / 2;
+
+    // Draw the circle centered in the hitbox
+    ctx.arc(centerX, centerY, 10, 0, Math.PI * 2);
+
+    ctx.fillStyle = "green";
+    ctx.fill();
+    ctx.closePath();
+    break;
         }
     }
 
@@ -185,7 +201,7 @@ function drawplayer(x, y) {
         player_htbx * 2
     );
     
-    //drawHitboxes();
+    drawHitboxes();
     
     // Draw interaction prompt
     drawInteractionPrompt();
@@ -282,7 +298,6 @@ function handleObjectInteraction(objectName) {
     
     switch (objectName) {
         case "door1":
-            // Special case - door1 leads to bathroom
             if (confirm("Do you want to go to the bathroom?")) {
                 window.location.href = "banheiro.html";
             }
@@ -292,6 +307,7 @@ function handleObjectInteraction(objectName) {
         case "sketchbook":
         case "tissues":
         case "television":
+        case "waiter":
         case "lightbulb":
             if (state.messages) {
                 let messageIndex = (state.interactions - 1) % state.messages.length;
@@ -416,3 +432,43 @@ canvas.addEventListener("mousemove", function(event) {
     
     canvas.style.cursor = isOverNearbyObject ? "pointer" : "default";
 });
+
+
+// DIALOGUE SYSTEM -----------------------------------------------------------------------
+
+function showDialogue(text) {
+    // Remove any existing dialogue
+    const existing = document.getElementById("dialogue-box");
+    if (existing) existing.remove();
+
+    // Create box
+    const box = document.createElement("div");
+    box.id = "dialogue-box";
+    box.style.position = "fixed";
+    box.style.bottom = "40px";
+    box.style.left = "50%";
+    box.style.transform = "translateX(-50%)";
+    box.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+    box.style.color = "white";
+    box.style.padding = "20px 30px";
+    box.style.borderRadius = "10px";
+    box.style.border = "2px solid white";
+    box.style.fontFamily = "'Courier New', monospace";
+    box.style.fontSize = "16px";
+    box.style.maxWidth = "70%";
+    box.style.textAlign = "center";
+    box.style.zIndex = "999";
+
+    box.textContent = text;
+
+    // Add it to page
+    document.body.appendChild(box);
+
+    // Remove when Enter or Escape is pressed
+    function removeBox(e) {
+        if (e.key === "Enter" || e.key === "Escape") {
+            box.remove();
+            document.removeEventListener("keydown", removeBox);
+        }
+    }
+}

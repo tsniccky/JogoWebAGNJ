@@ -1,0 +1,59 @@
+const dialogueQueue = {
+    "waiter": ["...", "The Waiter keeps silent", "He stares at you"]
+};
+
+function showNextDialogue(character) {
+  const queue = dialogueQueue[character];
+  
+  if (!queue || queue.length === 0) {
+    document.querySelector('.dialogue').textContent = "Dialogue finished.";
+    return;
+  }
+
+  const nextLine = queue.shift();
+  return nextLine;
+}
+
+function handleObjectInteraction(objectName) {
+    let state = objectStates[objectName];
+    if (!state) return;
+    
+    state.interactions++;
+    
+    let message = "";
+    
+    switch (objectName) {
+        case "door1":
+            if (confirm("Do you want to go to the bathroom?")) {
+                window.location.href = "banheiro.html";
+            }
+            return;
+            
+        case "cat":
+        case "sketchbook":
+        case "tissues":
+        case "television":
+        case "lightbulb":
+            if (state.messages) {
+                let messageIndex = (state.interactions - 1) % state.messages.length;
+                message = state.messages[messageIndex];
+            } else {
+                message = state.message;
+            }
+            break;
+        case "waiter":
+            console.log("Interacted with waiter");
+            document.querySelector('.dialogue').style.display = 'block';
+            document.querySelector('.dialogue').innerHTML = showNextDialogue("waiter");
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    document.querySelector('.dialogue').style.display = 'none';
+                    console.log("Closed dialogue box");
+                }
+            });
+            return;
+    }
+    
+    // Display message in a custom dialog
+    showMessageDialog(objectName, message);
+}

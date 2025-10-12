@@ -35,3 +35,59 @@ p{
     height: 540px;
     width: 960px;
 }
+
+.dialogue {
+    /*positioning and styling*/
+    position: absolute;
+    top: 78%;
+    left: 50%;
+    bottom: 15px;
+    transform: translateX(-50%);
+    background-color: black;
+    border: solid white 3px;
+    color: white;
+    padding: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.2em;
+    width: 60%;
+    /*setting behaviors*/
+    max-height: 100px;
+    overflow:hidden;
+    display: none;
+}
+
+.cutscene{
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.cutsceneDialogue {
+    /*positioning and styling*/
+    position: absolute;
+    top: 78%;
+    left: 50%;
+    bottom: 15px;
+    transform: translateX(-50%);
+    background-color: black;
+    border: solid white 3px;
+    color: white;
+    padding: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.2em;
+    width: 60%;
+    /*setting behaviors*/
+    max-height: 100px;
+    overflow:hidden;
+}
+
+.cutsceneImg{
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+    transform: translateX(-50%);
+    height: 40%;
+}

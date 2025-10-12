@@ -6,8 +6,8 @@ let ctx = canvas.getContext("2d");
 let width = canvas.width;
 let height = canvas.height;
 
-let Xplayer = 290;
-let Yplayer = 260;
+let Xplayer = width/2;
+let Yplayer = height/2;
 
 let moveSpeed = 5;
 let player_htbx = 20;
@@ -61,6 +61,7 @@ television.src = "sprites/laptop.png";
 
 player.onload = () => {
     drawplayer(Xplayer, Yplayer);
+    tutorial();
 };
 
 // Object hitboxes -----------------------------------------------------------------------
@@ -288,40 +289,6 @@ function stopMovement(event) {
 
 // Object interaction --------------------------------------------------------------------
 
-function handleObjectInteraction(objectName) {
-    let state = objectStates[objectName];
-    if (!state) return;
-    
-    state.interactions++;
-    
-    let message = "";
-    
-    switch (objectName) {
-        case "door1":
-            if (confirm("Do you want to go to the bathroom?")) {
-                window.location.href = "banheiro.html";
-            }
-            return;
-            
-        case "cat":
-        case "sketchbook":
-        case "tissues":
-        case "television":
-        case "waiter":
-        case "lightbulb":
-            if (state.messages) {
-                let messageIndex = (state.interactions - 1) % state.messages.length;
-                message = state.messages[messageIndex];
-            } else {
-                message = state.message;
-            }
-            break;
-    }
-    
-    // Display message in a custom dialog
-    showMessageDialog(objectName, message);
-}
-
 function showMessageDialog(objectName, message) {
     // Create overlay
     let overlay = document.createElement('div');
@@ -406,13 +373,6 @@ document.addEventListener("keydown", function(event) {
 
 document.addEventListener("keyup", stopMovement);
 
-// Mouse interaction - click on nearby object
-canvas.addEventListener("click", function(event) {
-    if (nearbyObject) {
-        handleObjectInteraction(nearbyObject.name);
-    }
-});
-
 // Change cursor when hovering over nearby interactable objects
 canvas.addEventListener("mousemove", function(event) {
     const rect = canvas.getBoundingClientRect();
@@ -432,43 +392,3 @@ canvas.addEventListener("mousemove", function(event) {
     
     canvas.style.cursor = isOverNearbyObject ? "pointer" : "default";
 });
-
-
-// DIALOGUE SYSTEM -----------------------------------------------------------------------
-
-function showDialogue(text) {
-    // Remove any existing dialogue
-    const existing = document.getElementById("dialogue-box");
-    if (existing) existing.remove();
-
-    // Create box
-    const box = document.createElement("div");
-    box.id = "dialogue-box";
-    box.style.position = "fixed";
-    box.style.bottom = "40px";
-    box.style.left = "50%";
-    box.style.transform = "translateX(-50%)";
-    box.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
-    box.style.color = "white";
-    box.style.padding = "20px 30px";
-    box.style.borderRadius = "10px";
-    box.style.border = "2px solid white";
-    box.style.fontFamily = "'Courier New', monospace";
-    box.style.fontSize = "16px";
-    box.style.maxWidth = "70%";
-    box.style.textAlign = "center";
-    box.style.zIndex = "999";
-
-    box.textContent = text;
-
-    // Add it to page
-    document.body.appendChild(box);
-
-    // Remove when Enter or Escape is pressed
-    function removeBox(e) {
-        if (e.key === "Enter" || e.key === "Escape") {
-            box.remove();
-            document.removeEventListener("keydown", removeBox);
-        }
-    }
-}

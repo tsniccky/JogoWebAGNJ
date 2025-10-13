@@ -49,16 +49,18 @@ omori.onload = () => {
 };
 
 // Object hitboxes -----------------------------------------------------------------------
+// Object hitboxes -----------------------------------------------------------------------
 
 let objects = [
-    { name: "door", x: 320, y: 91, width: 40, height: 58 },
-    { name: "plant2", x: 555, y: 290, width: 50, height: 50 },
-    { name: "plant", x: 320, y: 290, width: 50, height: 50 },
-    { name: "toilet", x: 550, y: 145, width: 60, height: 60},
-    { name: "toiletpaper", x: 515, y: 150, width: 55, height: 55 },
-     { name: "sink", x: 425, y: 145, width: 65, height: 45 },
-    { name: "lightbulb", x: 450, y: 0, width: 32, height: 32 }
+    { name: "porte", x: 320, y: 91, width: 40, height: 58 },          
+    { name: "plante2", x: 555, y: 290, width: 50, height: 50 },      
+    { name: "plante", x: 320, y: 290, width: 50, height: 50 },      
+    { name: "toilettes", x: 550, y: 145, width: 60, height: 60 },     
+    { name: "papier_toilette", x: 515, y: 150, width: 55, height: 55 }, 
+    { name: "lavabo", x: 425, y: 145, width: 65, height: 45 },        
+    { name: "ampoule", x: 450, y: 0, width: 32, height: 32 }         
 ];
+
 
 // Collision detection -------------------------------------------------------------------
 
@@ -81,17 +83,18 @@ function drawHitboxes() {}
 function drawOmori(x, y) {
     ctx.strokeRect(width / 2 - 150, height / 2 - 125, 280, 195);
 
-    for (let obj of objects) {
-        switch (obj.name) {
-            case "door": ctx.drawImage(door, obj.x, obj.y, obj.width, obj.height); break;
-            case "plant": ctx.drawImage(plant, obj.x, obj.y, obj.width, obj.height); break;
-            case "plant2": ctx.drawImage(plant2, obj.x, obj.y, obj.width, obj.height); break;
-            case "toilet": ctx.drawImage(toilet, obj.x, obj.y, obj.width, obj.height); break;
-            case "toiletpaper": ctx.drawImage(toiletpaper, obj.x, obj.y, obj.width, obj.height); break;
-             case "sink": ctx.drawImage(sink, obj.x, obj.y, obj.width, obj.height); break;
-            case "lightbulb": ctx.drawImage(lightbulb, obj.x, obj.y, obj.width, obj.height); break;
-        }
+   for (let obj of objects) {
+    switch (obj.name) {
+        case "porte": ctx.drawImage(door, obj.x, obj.y, obj.width, obj.height); break;
+        case "plante": ctx.drawImage(plant, obj.x, obj.y, obj.width, obj.height); break;
+        case "plante2": ctx.drawImage(plant2, obj.x, obj.y, obj.width, obj.height); break;
+        case "toilettes": ctx.drawImage(toilet, obj.x, obj.y, obj.width, obj.height); break;
+        case "papier_toilette": ctx.drawImage(toiletpaper, obj.x, obj.y, obj.width, obj.height); break;
+        case "lavabo": ctx.drawImage(sink, obj.x, obj.y, obj.width, obj.height); break;
+        case "ampoule": ctx.drawImage(lightbulb, obj.x, obj.y, obj.width, obj.height); break;
     }
+}
+
 
     ctx.drawImage(
         currentOmori,

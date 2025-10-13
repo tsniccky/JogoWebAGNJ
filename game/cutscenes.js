@@ -115,7 +115,7 @@ function Talk2Waiter() {
 }
 
 function quiz() {
-pauseCutsceneInput(); 
+
     lines = [
         () => YOUshallCHOOSE("Qual o maior produtor de café do mundo?", "sprites/omori/omStanding_F.png",
             [
@@ -218,4 +218,5 @@ pauseCutsceneInput();
 
     playCutscene(lines, "QUIZ");
 }
+
 

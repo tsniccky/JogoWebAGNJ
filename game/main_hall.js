@@ -134,7 +134,7 @@ function drawplayer(x, y) {
             case "tissues": ctx.drawImage(tissues, obj.x, obj.y, obj.width, obj.height); break;
             case "television": ctx.drawImage(television, obj.x, obj.y, obj.width, obj.height); break;
             case "lightbulb": ctx.drawImage(lightbulb, obj.x, obj.y, obj.width, obj.height); break;
-            case "waiter":
+            case "waiter": ctx.strokeRect(obj.x, obj.y, obj.width, obj.height); break;
     ctx.beginPath();
     }
 }
@@ -257,3 +257,4 @@ document.addEventListener("keydown", function(event) {
 
 
 document.addEventListener("keyup", stopMovement);
+

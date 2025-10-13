@@ -161,7 +161,7 @@ function drawOmori(x, y) {
     // Player
     ctx.drawImage(currentOmori, x - omori_htbx, y - omori_htbx, omori_htbx * 2, omori_htbx * 2);
 
-    drawHitboxes();
+    */drawHitboxes();
     drawInteractionPrompt();
 }
 

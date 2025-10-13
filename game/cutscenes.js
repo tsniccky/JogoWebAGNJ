@@ -36,7 +36,7 @@ function playCutscene(lines, cutsceneName) {
     document.addEventListener('keydown', onKey);
 
 // expose both to other scripts
-    document.addEventListener('keydown', onKey);
+    //document.addEventListener('keydown', onKey);
 
     // expose both to other scripts
     window.nextStep = nextStep;
@@ -94,7 +94,7 @@ function Talk2Waiter() {
             }),
         () => {
             switch(PlayerChoice) {
-            case ("Caffè Late"):
+            case ("Caffè Latte"):
                 YOUshallSPEAK("O Barista alcança ao Waiter um Caffè Latte.", "sprites/omori/omStanding_F.png");
                 break;
             case ("Mocha"):
@@ -293,5 +293,6 @@ function quiz() {
     playCutscene(lines, "QUIZ");
 
 }
+
 
 

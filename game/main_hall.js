@@ -134,23 +134,15 @@ function drawplayer(x, y) {
             case "tissues": ctx.drawImage(tissues, obj.x, obj.y, obj.width, obj.height); break;
             case "television": ctx.drawImage(television, obj.x, obj.y, obj.width, obj.height); break;
             case "lightbulb": ctx.drawImage(lightbulb, obj.x, obj.y, obj.width, obj.height); break;
-            case "waiter": 
-    ctx.beginPath();
-    
-
-
-
-    // Calculate the center of the hitbox
-    const centerX = obj.x + obj.width / 2;
-    const centerY = obj.y + obj.height / 2;
-
-    // Draw the circle centered in the hitbox
-    ctx.arc(centerX, centerY, 10, 0, Math.PI * 2);
-
-    ctx.fillStyle = "green";
-    ctx.fill();
-    ctx.closePath();
-    break;
+            case "waiter":
+                ctx.beginPath();
+                const centerX = obj.x + obj.width/2;
+                const centerY = obj.y + obj.height/2;
+                ctx.arc(centerX, centerY, 10, 0, Math.PI*2);
+                ctx.fillStyle = "green";
+                ctx.fill();
+                ctx.closePath();
+                break;
         }
     }
 
@@ -257,5 +249,6 @@ document.addEventListener("keydown", function(event) {
 
 
 document.addEventListener("keyup", stopMovement);
+
 
 

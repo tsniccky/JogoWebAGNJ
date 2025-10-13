@@ -35,7 +35,6 @@ function playCutscene(lines, cutsceneName) {
     // apenas uma vez
     document.addEventListener('keydown', onKey);
 
-    // expõe controles globais
     window.nextStep = nextStep;
     window.pauseCutsceneInput = () => document.removeEventListener('keydown', onKey);
     window.resumeCutsceneInput = () => document.addEventListener('keydown', onKey);
@@ -116,7 +115,7 @@ function Talk2Waiter() {
 }
 
 function quiz() {
-
+pauseCutsceneInput(); 
     lines = [
         () => YOUshallCHOOSE("Qual o maior produtor de café do mundo?", "sprites/omori/omStanding_F.png",
             [
@@ -219,3 +218,4 @@ function quiz() {
 
     playCutscene(lines, "QUIZ");
 }
+

@@ -75,7 +75,8 @@ function tutorial() {
         playCutscene(lines, "TUTORIAL");
     } else {
         console.log("Tutorial already completed");
-        playCutscene(lines, "TUTORIAL");
+        //playCutscene(lines, "TUTORIAL");
+        //un-comment to make cutscene play regardless
     }
 }
 
@@ -293,3 +294,4 @@ function quiz() {
     playCutscene(lines, "QUIZ");
 
 }
+

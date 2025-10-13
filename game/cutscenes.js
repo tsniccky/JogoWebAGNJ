@@ -2,18 +2,18 @@
 let lines = [];
 let options = [];
 let PlayerChoice = "";
+localStorage.setItem("CompletedTutorial", false);
 
 function YOUshallSPEAK(text, img) {
-    console.log("Tutorial cutscene");
-    const cutsceneEl = document.querySelector('.cutscene');
-    cutsceneEl.style.display = 'block';
+    const cutsceneQuery = document.querySelector('.cutscene');
+    cutsceneQuery.style.display = 'block';
     document.querySelector('.cutsceneDialogue').innerHTML = text;
     document.querySelector('.cutsceneImg').src = img;
 }
 
-function playCutscene(lines) {
+function playCutscene(lines, cutsceneName) {
     let currentStep = 0;
-
+    console.log("Comencing cutscene - " + cutsceneName);
     function nextStep() {
         if (currentStep < lines.length) {
             const step = lines[currentStep];
@@ -62,12 +62,18 @@ function tutorial() {
         () => YOUshallSPEAK("Porém adianto, tenha cautela ao escolher, somente poderá escolher o mesmo uma vez. Dica: vá primeiro de Caffè Latte. Caso precise, pode se dirigir ao banheiro quantas vezes quiser, apenas venha aqui que o levamos.", "sprites/omori/omStanding_F.png"),
         () => YOUshallSPEAK("Certo. Então eu quero um…", "sprites/cat.png"),
         () => YOUshallSPEAK("Antes que eu me esqueça, cuide o que faz ou fala por aí… Ah-", "sprites/omori/omStanding_F.png"),
-        () => YOUshallSPEAK("Boa noite, Waiter.", "sprites/omori/omStanding_F.png"),
+        () => {YOUshallSPEAK("Boa noite, Waiter.", "sprites/omori/omStanding_F.png");
+            localStorage.setItem("CompletedTutorial", true);},
         () => Talk2Waiter()
     ];
 
-
-    playCutscene(lines);
+    if (localStorage.getItem("CompletedTutorial") === false) {
+        console.log("Comencing tutorial");
+        playCutscene(lines, "TUTORIAL");
+    } else {
+        console.log("Tutorial already completed");
+        //playCutscene(lines, "TUTORIAL");
+    }
 }
 
 function Talk2Waiter() {
@@ -103,5 +109,5 @@ function Talk2Waiter() {
     ];
 
 
-    playCutscene(lines);
+    playCutscene(lines, "Talk2Waiter");
 }

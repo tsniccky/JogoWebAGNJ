@@ -40,20 +40,9 @@ function handleObjectInteraction(objectName) {
             } else {
                 message = state.message;
             }
-            break;
+            showMessageDialog(objectName, message);
         case "waiter":
-            console.log("Interacted with waiter");
-            document.querySelector('.dialogue').style.display = 'block';
-            document.querySelector('.dialogue').innerHTML = showNextDialogue("waiter");
-            document.addEventListener('keydown', (event) => {
-                if (event.key === 'Enter') {
-                    document.querySelector('.dialogue').style.display = 'none';
-                    console.log("Closed dialogue box");
-                }
-            });
+            Talk2Waiter();
             return;
     }
-    
-    // Display message in a custom dialog
-    showMessageDialog(objectName, message);
 }

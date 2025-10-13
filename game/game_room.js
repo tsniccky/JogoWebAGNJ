@@ -218,7 +218,7 @@ function handleKeyPress(event) {
     if ((event.key === 'e' || event.key === 'E' || event.key === 'Enter') && nearbyObject) {
         const objName = nearbyObject.name;
          if (objName === "waiter") {
-        talk2Waiter1();
+        Talk2JNecker1();
         return;
     }
         const state = objectStates[objName];

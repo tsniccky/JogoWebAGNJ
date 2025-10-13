@@ -51,8 +51,6 @@ function playCutscene(lines, cutsceneName) {
 
 function tutorial() {
 
-    localStorage.setItem ("PlayerName", prompt("What's your name again?"));
-
     lines = [
         () => YOUshallSPEAK("Boa tarde, como posso ajudar?", "sprites/omori/omStanding_F.png"),
         () => YOUshallSPEAK("Olá, estou um pouco perdido…", "sprites/cat.png"),
@@ -71,6 +69,7 @@ function tutorial() {
     ];
 
     if (localStorage.getItem("CompletedTutorial") === false) {
+        localStorage.setItem ("PlayerName", prompt("What's your name again?"));
         console.log("Comencing tutorial");
         playCutscene(lines, "TUTORIAL");
     } else {
@@ -294,4 +293,5 @@ function quiz() {
     playCutscene(lines, "QUIZ");
 
 }
+
 

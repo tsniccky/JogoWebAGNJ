@@ -254,5 +254,5 @@ canvas.addEventListener("mousemove", event => {
 // Initial draw --------------------------------------------------------------------------
 omori.onload = () => {
     drawOmori(Xomori, Yomori);
-    tutorial();
+    //tutorial();
 };

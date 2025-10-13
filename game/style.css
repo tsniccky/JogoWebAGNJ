@@ -66,7 +66,36 @@ p{
 }
 
 .cutsceneDialogue {
-    /*positioning and styling*/
+    position: absolute;
+    top: 0;
+    left: 0;
+    right:0;
+    padding-bottom: 0;
+    width: 97%;
+    background-color: black;
+    color: white;
+    margin-top: 20px;
+    margin-left: 20px;
+    padding: 5px;
+    max-height: 200px; /* allows space for options */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1em;
+    justify-content: space-between;
+}
+
+.cutsceneImg{
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+    transform: translateX(-50%);
+    height: 40%;
+}
+
+.cutsceneDialogueContainer {
     position: absolute;
     top: 78%;
     left: 50%;
@@ -76,18 +105,27 @@ p{
     border: solid white 3px;
     color: white;
     padding: 20px;
+    width: 60%;
+    max-height: 200px; /* allows space for options */
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
     font-family: 'Courier New', Courier, monospace;
     font-size: 1.2em;
-    width: 60%;
-    /*setting behaviors*/
-    max-height: 100px;
-    overflow:hidden;
 }
 
-.cutsceneImg{
-    position: absolute;
-    bottom: 10%;
-    right: 10%;
-    transform: translateX(-50%);
-    height: 40%;
+.OptionsContainer {
+    margin-top: 33px;
+    display: flex;
+    flex-direction: column;
+}
+
+.option {
+    color: white;
+    padding: 3px;
+    border-radius: 4px;
+    margin-bottom: 0;
+}
+.option.highlighted {
+    background-color: #555;
 }

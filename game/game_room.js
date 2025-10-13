@@ -45,7 +45,7 @@ counter1.src = "sprites/counter1.png";
 const sketchbook = new Image();
 sketchbook.src = "sprites/sketchbook.png"; // agora representa o "finances book"
 
-};
+
 
 // Object hitboxes -----------------------------------------------------------------------
 

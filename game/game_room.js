@@ -217,6 +217,10 @@ function showMessageDialog(objectName, message) {
 function handleKeyPress(event) {
     if ((event.key === 'e' || event.key === 'E' || event.key === 'Enter') && nearbyObject) {
         const objName = nearbyObject.name;
+         if (objName === "waiter") {
+        talk2Waiter1();
+        return;
+    }
         const state = objectStates[objName];
         let message = state.message || state.messages[state.interactions % state.messages.length];
         state.interactions++;

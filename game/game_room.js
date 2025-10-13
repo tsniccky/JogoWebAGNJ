@@ -45,6 +45,11 @@ counter1.src = "sprites/counter1.png";
 const sketchbook = new Image();
 sketchbook.src = "sprites/sketchbook.png"; // agora representa o "finances book"
 
+omori.onload = () => {
+    drawOmori(Xomori, Yomori);
+    tutorial();
+};
+
 // Object hitboxes -----------------------------------------------------------------------
 
 let objects = [

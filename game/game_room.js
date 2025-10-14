@@ -114,7 +114,15 @@ function drawInteractionPrompt() {
 
 function handleKeyPress(event) {
     if ((event.key === 'e' || event.key === 'E' ) && nearbyObject) {
-        handleObjectInteraction(nearbyObject.name); // this calls Talk2JNecker2 or Talk2Waiter
+        const objName = nearbyObject.name;
+         if (objName === "desk") {
+        Talk2JNecker1();
+        return;
+    }
+        const state = objectStates[objName];
+        let message = state.message || state.messages[state.interactions % state.messages.length];
+        state.interactions++;
+        showMessageDialog(objName, message);
     }
 }
 

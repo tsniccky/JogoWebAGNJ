@@ -4,7 +4,9 @@ bgMusic.loop = true;
 bgMusic.volume = 1.0;
 document.addEventListener("click", () => {
     bgMusic.play();
-}, { once: true });
+}, 
+{ 
+    once: true });
 
 let canvas = document.getElementById("Canvas");
 let ctx = canvas.getContext("2d");
@@ -32,10 +34,10 @@ let objectStates = {
 // Sprite loading ------------------------------------------------------------------------
 
 const player = new Image();
-player.src = "sprites/stickman.png";
+player.src = "sprites/jogador.webp";
 
 const playerRun = new Image();
-playerRun.src = "sprites/stickman.png";
+playerRun.src = "sprites/jogador.webp";
 
 const door1 = new Image();
 door1.src = "sprites/door.png";

@@ -8,7 +8,6 @@ let height = canvas.height;
 
 let omori_htbx = 30;
 let moveSpeed = 5;
-let interactionRange = 60;
 
 // Object interaction states
 let objectStates = {
@@ -71,25 +70,51 @@ function isColliding(ax, ay, aw, ah, bx, by, bw, bh) {
     return ax < bx + bw && ax + aw > bx && ay < by + bh && ay + ah > by;
 }
 
+// Interaction system -------------------------------------------------------
+
+let interactionRange = 60;
+let nearbyObject = null;
+let showInteractionPrompt = false;
+
 function getDistance(x1, y1, x2, y2) {
-    return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
 }
 
 function findNearbyObject() {
     for (let obj of objects) {
         if (!obj.interactable) continue;
-        let objCenterX = obj.x + obj.width / 2;
-        let objCenterY = obj.y + obj.height / 2;
+        const objCenterX = obj.x + obj.width / 2;
+        const objCenterY = obj.y + obj.height / 2;
         if (getDistance(Xomori, Yomori, objCenterX, objCenterY) <= interactionRange) return obj;
     }
     return null;
 }
 
+function drawInteractionPrompt() {
+    if (showInteractionPrompt && nearbyObject) {
+        ctx.fillStyle = 'rgba(0,0,0,0.7)';
+        ctx.fillRect(width/2 - 80, height - 60, 160, 40);
+        ctx.fillStyle = 'white';
+        ctx.font = '16px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('Press E to interact', width/2, height - 35);
+
+        ctx.strokeStyle = 'yellow';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(nearbyObject.x - 2, nearbyObject.y - 2, nearbyObject.width + 4, nearbyObject.height + 4);
+    }
+}
+
+function handleKeyPress(event) {
+    if ((event.key === 'e' || event.key === 'E' || event.key === 'Enter') && nearbyObject) {
+        handleObjectInteraction(nearbyObject.name); // this calls Talk2JNecker2 or Talk2Waiter
+    }
+}
+
+
 // Drawing ------------------------------------------------------------------------------
 
 let currentOmori = omori;
-let nearbyObject = null;
-let showInteractionPrompt = false;
 
 function drawOmori(x, y) {
     ctx.clearRect(0, 0, width, height);
@@ -124,21 +149,6 @@ function drawOmori(x, y) {
     ctx.drawImage(currentOmori, x - omori_htbx, y - omori_htbx, omori_htbx*2, omori_htbx*2);
 
     drawInteractionPrompt();
-}
-
-function drawInteractionPrompt() {
-    if (showInteractionPrompt && nearbyObject) {
-        ctx.fillStyle = 'rgba(0,0,0,0.7)';
-        ctx.fillRect(width/2 - 80, height - 60, 160, 40);
-        ctx.fillStyle = 'white';
-        ctx.font = '16px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText('Press E to interact', width/2, height - 35);
-
-        ctx.strokeStyle = 'yellow';
-        ctx.lineWidth = 3;
-        ctx.strokeRect(nearbyObject.x - 2, nearbyObject.y - 2, nearbyObject.width + 4, nearbyObject.height + 4);
-    }
 }
 
 // Movement ------------------------------------------------------------------------------
@@ -176,83 +186,13 @@ function stopMovement(event) {
     }
 }
 
-// Interaction ---------------------------------------------------------------------------
-
-function showMessageDialog(objectName, message) {
-    let overlay = document.createElement('div');
-    overlay.style.position = 'fixed';
-    overlay.style.top = 0; overlay.style.left = 0;
-    overlay.style.width = '100%'; overlay.style.height = '100%';
-    overlay.style.backgroundColor = 'rgba(0,0,0,0.7)';
-    overlay.style.display = 'flex'; overlay.style.justifyContent = 'center'; overlay.style.alignItems = 'center';
-    overlay.style.zIndex = 1000;
-
-    let dialog = document.createElement('div');
-    dialog.style.backgroundColor = 'white';
-    dialog.style.padding = '30px';
-    dialog.style.borderRadius = '10px';
-    dialog.style.border = '3px solid black';
-    dialog.style.maxWidth = '400px';
-    dialog.style.textAlign = 'center';
-    dialog.style.fontFamily = "'Courier New', monospace";
-
-    let title = document.createElement('h2');
-    title.textContent = objectName.charAt(0).toUpperCase() + objectName.slice(1);
-    title.style.marginTop = 0;
-
-    let messageText = document.createElement('p');
-    messageText.textContent = message;
-
-    let closeButton = document.createElement('button');
-    closeButton.textContent = 'Close';
-    closeButton.style.padding = '10px 20px';
-    closeButton.style.cursor = 'pointer';
-    closeButton.onclick = () => document.body.removeChild(overlay);
-
-    dialog.append(title, messageText, closeButton);
-    overlay.appendChild(dialog);
-    document.body.appendChild(overlay);
-    overlay.tabIndex = 0;
-    overlay.focus();
-}
-
-function handleKeyPress(event) {
-    if ((event.key === 'e' || event.key === 'E' || event.key === 'Enter') && nearbyObject) {
-        const objName = nearbyObject.name;
-         if (objName === "desk") {
-        Talk2JNecker1();
-        return;
-    }
-        const state = objectStates[objName];
-        let message = state.message || state.messages[state.interactions % state.messages.length];
-        state.interactions++;
-        showMessageDialog(objName, message);
-    }
-}
-
 // Event listeners -----------------------------------------------------------------------
 
 document.addEventListener("keydown", event => { moveByKey(event); handleKeyPress(event); });
 document.addEventListener("keyup", stopMovement);
 
-canvas.addEventListener("mousemove", event => {
-    const rect = canvas.getBoundingClientRect();
-    const mouseX = event.clientX - rect.left;
-    const mouseY = event.clientY - rect.top;
-
-    if (nearbyObject &&
-        mouseX >= nearbyObject.x &&
-        mouseX <= nearbyObject.x + nearbyObject.width &&
-        mouseY >= nearbyObject.y &&
-        mouseY <= nearbyObject.y + nearbyObject.height) {
-        canvas.style.cursor = "pointer";
-    } else {
-        canvas.style.cursor = "default";
-    }
-});
-
 // Initial draw --------------------------------------------------------------------------
 omori.onload = () => {
     drawOmori(Xomori, Yomori);
-    tutorial();
+    Talk2JNecker1();
 };

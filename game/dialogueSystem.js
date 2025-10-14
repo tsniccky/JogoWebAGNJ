@@ -25,7 +25,7 @@ function handleObjectInteraction(objectName) {
     switch (objectName) {
         case "door1":
             if (confirm("Do you want to go to the bathroom?")) {
-                window.location.href = "banheiro.html";
+                window.location.href = "salas/banheiro.html";
             }
             return;
             
@@ -43,6 +43,9 @@ function handleObjectInteraction(objectName) {
             showMessageDialog(objectName, message);
         case "waiter":
             Talk2Waiter();
+            return;
+        case "necker":
+            Talk2JNecker2();
             return;
     }
 }

@@ -28,6 +28,7 @@ let objectStates = {
     counter1: { interactions: 0, messages: ["A counter"] },
     lightbulb: { interactions: 0, messages: ["A bright lightbulb", "It illuminates the room", "Energy efficient!"] },
     counter3: { interactions: 0, messages: [".Let's make a coffee!"] },
+     Henriette: { interactions: 0, messages: ["He stares at you","..."] },
     counter2: { interactions: 0, messages: ["A television", "The screen is static", "It won't turn on"] }
 };
 
@@ -73,6 +74,7 @@ counter3.src = "sprites/counter3.png";
 
 omori.onload = () => {
     drawOmori(Xomori, Yomori);
+    tutorial();
 };
 
 // Object hitboxes -----------------------------------------------------------------------
@@ -80,10 +82,11 @@ omori.onload = () => {
 let objects = [
     { name: "door", x: 320, y: 91, width: 44, height: 62, interactable: true },
     { name: "saco2", x: 520, y: 290, width: 60, height: 60, interactable: true },
-    { name: "saco1", x: 520, y: 150, width: 55, height: 55, interactable: true },
+    { name: "saco1", x: 525, y: 150, width: 45, height: 45, interactable: true },
     { name: "saco3", x: 380, y: 285, width: 45, height: 45, interactable: true },
-    { name: "counter1", x: 385, y: 140, width: 60, height: 60, interactable: true },
+    { name: "counter1", x: 405, y: 140, width: 60, height: 60, interactable: true },
     { name: "counter3", x: 350, y: 285, width: 75, height: 60, interactable: true },
+  { name: "Henriette", x: 375, y: 150, width: 32, height: 32, interactable: true },
     { name: "lightbulb", x: 450, y: 0, width: 32, height: 32, interactable: true }
 ];
 
@@ -155,6 +158,14 @@ function drawOmori(x, y) {
             case "saco1": ctx.drawImage(saco1, obj.x, obj.y, obj.width, obj.height); break;
             case "saco2": ctx.drawImage(saco2, obj.x, obj.y, obj.width, obj.height); break;
             case "lightbulb": ctx.drawImage(lightbulb, obj.x, obj.y, obj.width, obj.height); break;
+            case "Henriette":  ctx.beginPath();
+                const centerX = obj.x + obj.width / 2;
+                const centerY = obj.y + obj.height / 2;
+                ctx.arc(centerX, centerY, 10, 0, Math.PI*2);
+                ctx.fillStyle = "purple";
+                ctx.fill();
+                ctx.closePath();
+                break;
         }
     }
 
@@ -243,6 +254,9 @@ function showMessageDialog(objectName, message) {
 function handleKeyPress(event) {
     if ((event.key === 'e' || event.key === 'E' || event.key === 'Enter') && nearbyObject) {
         const objName = nearbyObject.name;
+         if (objName === "Henriette") {
+        Talk2HENRIETTE();
+        return;}
         const state = objectStates[objName];
         let message = state.message || state.messages[state.interactions % state.messages.length];
         state.interactions++;

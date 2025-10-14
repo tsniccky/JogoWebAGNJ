@@ -113,7 +113,7 @@ function drawInteractionPrompt() {
 }
 
 function handleKeyPress(event) {
-    if ((event.key === 'e' || event.key === 'E' || event.key === 'Enter') && nearbyObject) {
+    if ((event.key === 'e' || event.key === 'E' ) && nearbyObject) {
         handleObjectInteraction(nearbyObject.name); // this calls Talk2JNecker2 or Talk2Waiter
     }
 }

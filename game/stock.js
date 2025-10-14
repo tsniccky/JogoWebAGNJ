@@ -10,7 +10,7 @@ let Yomori = height / 2;
 
 let moveSpeed = 5;
 let omori_htbx = 30;
-let interactionRange = 70;
+//let interactionRange = 70;
 
 let nearbyObject = null;
 let showInteractionPrompt = false;

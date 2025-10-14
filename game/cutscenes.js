@@ -1,3 +1,52 @@
+// CUTSCENE MECHANICS ----------------------------------------------------------------
+let lines = [];
+let options = [];
+let PlayerChoice = "";
+localStorage.setItem("CompletedTutorial", false);
+const PlayerName = localStorage.getItem("PlayerName");
+
+function YOUshallSPEAK(text, img) {
+    const cutsceneQuery = document.querySelector('.cutscene');
+    cutsceneQuery.style.display = 'block';
+    document.querySelector('.cutsceneDialogue').innerHTML = text;
+    document.querySelector('.cutsceneImg').src = img;
+}
+
+function playCutscene(lines, cutsceneName) {
+    let currentStep = 0;
+    console.log("Comencing cutscene - " + cutsceneName);
+    function nextStep() {
+        if (currentStep < lines.length) {
+            const step = lines[currentStep];
+            currentStep++;
+            step();
+        } else {
+            console.log("Finished Cutscene");
+            document.querySelector('.cutscene').style.display = 'none';
+            document.removeEventListener('keydown', onKey);
+        }
+    }
+
+    function onKey(e) {
+        if (e.key === 'Enter') nextStep();
+    }
+
+    window.nextStep = nextStep;
+
+    document.addEventListener('keydown', onKey);
+
+// expose both to other scripts
+    document.addEventListener('keydown', onKey);
+
+    // expose both to other scripts
+    window.nextStep = nextStep;
+    window.pauseCutsceneInput = () => document.removeEventListener('keydown', onKey);
+    window.resumeCutsceneInput = () => document.addEventListener('keydown', onKey);
+
+    nextStep();
+
+}
+
 // CUTSCENES ----------------------------------------------------------------
 
 function tutorial() {
@@ -270,7 +319,7 @@ function quiz() {
 }
 
 
-function playCutscene(lines, nextSceneName) {
+/*function playCutscene(lines, nextSceneName) {
     cutsceneActive = true;
 
     let i = 0;
@@ -308,7 +357,7 @@ function YOUshallSPEAK(text, img) {
 
     
 }
-
+*/
 
 
 
@@ -352,6 +401,7 @@ function Talk2Henri() {
         }
     );
 }
+
 
 
 

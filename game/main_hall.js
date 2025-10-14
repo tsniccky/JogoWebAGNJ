@@ -1,4 +1,10 @@
 // Initial setup -------------------------------------------------------------------------
+let bgMusic = new Audio("musica.mp3");
+bgMusic.loop = true;
+bgMusic.volume = 1.0;
+document.addEventListener("click", () => {
+    bgMusic.play();
+}, { once: true });
 
 let canvas = document.getElementById("Canvas");
 let ctx = canvas.getContext("2d");
@@ -249,6 +255,7 @@ document.addEventListener("keydown", function(event) {
 
 
 document.addEventListener("keyup", stopMovement);
+
 
 
 

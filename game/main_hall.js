@@ -61,7 +61,7 @@ const television = new Image();
 television.src = "sprites/laptop.png";
 
 const waiter = new Image();
-waiter.src = "sprites/waiter.png";
+waiter.src = "sprites/waiter.webp";
 
 // Initial draw --------------------------------------------------------------------------
 

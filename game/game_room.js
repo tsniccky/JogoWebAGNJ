@@ -15,7 +15,7 @@ let height = canvas.height;
 
 let omori_htbx = 30;
 let moveSpeed = 5;
-let interactionRange = 70;
+//let interactionRange = 70;
 
 // Object interaction states
 let objectStates = {

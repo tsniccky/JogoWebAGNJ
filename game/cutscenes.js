@@ -31,43 +31,66 @@ function tutorial() {
 }
 
 function Talk2Waiter() {
+    cutsceneActive = true;
 
-    lines = [
+    const lines = [
+        // Linha inicial
         () => YOUshallSPEAK("...?", "sprites/omori/omStanding_F.png"),
-        () => YOUshallCHOOSE("Ahn.. eu gostaria de...", "sprites/cat.png",
+
+        // Escolha do café
+        () => YOUshallCHOOSE(
+            "Ahn.. eu gostaria de...",
+            "sprites/cat.png",
             [
                 { text: "Um Caffè Latte", value: "Caffè Latte" },
                 { text: "Um Mocha", value: "Mocha" },
                 { text: "Ver o menu (voltar)", value: "Back" }
             ],
-            (PlayerChoice) => {YOUshallSPEAK("Você escolheu um " + PlayerChoice + ".", "sprites/omori/omStanding_F.png");
-                nextStep(); // continue to the next line in the cutscene
-            }),
+            (choice) => {
+                PlayerChoice = choice; // salva escolha global
+
+                // Mostra fala do jogador sobre a escolha
+                YOUshallSPEAK("Você escolheu um " + choice + ".", "sprites/omori/omStanding_F.png");
+
+                // Continua a cutscene
+                nextStep();
+            }
+        ),
+
+        // Reação do Barista
         () => {
             switch(PlayerChoice) {
-            case ("Caffè Latte"):
-                YOUshallSPEAK("O Barista alcança ao Waiter um Caffè Latte.", "sprites/omori/omStanding_F.png");
-                break;
-            case ("Mocha"):
-                YOUshallSPEAK("O Barista alcança ao Waiter um Mocha.", "sprites/omori/omStanding_F.png");
-                break;
-            case ("Back"):
-                YOUshallSPEAK('O Waiter olha pro Barista e faz um sinal de "Não".', "sprites/omori/omStanding_F.png");
-                break;
+                case "Caffè Latte":
+                    YOUshallSPEAK("O Barista alcança ao Waiter um Caffè Latte.", "sprites/omori/omStanding_F.png");
+                    break;
+                case "Mocha":
+                    YOUshallSPEAK("O Barista alcança ao Waiter um Mocha.", "sprites/omori/omStanding_F.png");
+                    break;
+                case "Back":
+                    YOUshallSPEAK('O Waiter olha pro Barista e faz um sinal de "Não".', "sprites/omori/omStanding_F.png");
+                    break;
             }
         },
+
+        // Decisão final
         () => {
             switch(PlayerChoice) {
-            case ("Mocha"): window.location.href = "stock.html"; break;
-            case ("Caffè Latte"): window.location.href = "game_room.html"; break;
-            case ("Back"): YOUshallSPEAK("O Barista acena com a cabeça.", "sprites/omori/omStanding_F.png"); break;
-            };
+                case "Mocha":
+                    window.location.href = "stock.html";
+                    break;
+                case "Caffè Latte":
+                    window.location.href = "game_room.html";
+                    break;
+                case "Back":
+                    YOUshallSPEAK("O Barista acena com a cabeça.", "sprites/omori/omStanding_F.png");
+                    break;
+            }
         }
     ];
 
-
     playCutscene(lines, "Talk2Waiter");
 }
+
 
 function Talk2JNecker1() {
 
@@ -139,7 +162,6 @@ function Talk2JNecker2() {
             switch(PlayerChoice) {
             case ("sim"):
                 quiz();
-                document.removeEventListener('keydown', onKey);
                 break;
             }
         }
@@ -189,7 +211,8 @@ function quiz() {
             case ("a opção 1"):
                 YOUshallSPEAK("Perfeito.", "sprites/omori/omStanding_F.png");
                 break;
-            case ("a opção 2"):
+         
+                case ("a opção 2"):
                 YOUshallSPEAK("Você sabe que gourmet quer dizer algo mais requintado, certo?", "sprites/omori/omStanding_F.png");
                 break;
             }
@@ -246,6 +269,7 @@ function quiz() {
 
 }
 
+
 function playCutscene(lines, nextSceneName) {
     cutsceneActive = true;
 
@@ -253,17 +277,25 @@ function playCutscene(lines, nextSceneName) {
 
     window.nextStep = function() {
         if (i < lines.length) {
-            lines[i](); 
+            const lineFunc = lines[i];
             i++;
+            lineFunc(); // executa a função atual da linha
         } else {
             cutsceneActive = false;
             console.log("Cutscene ended:", nextSceneName);
-            window.nextStep = null; 
+            window.nextStep = null; // limpa referência
         }
     }
 
-    nextStep(); 
+    nextStep(); // inicia a primeira linha
 }
+document.addEventListener('keydown', (e) => {
+    if (e.key === "Enter" && cutsceneActive) {
+        if (window.nextStep) window.nextStep();
+    }
+});
+
+
 function YOUshallSPEAK(text, img) {
     const cutsceneEl = document.querySelector('.cutscene');
     cutsceneEl.style.display = 'block';
@@ -274,9 +306,9 @@ function YOUshallSPEAK(text, img) {
     const dialogueImg = document.querySelector('.cutsceneImg');
     dialogueImg.src = img;
 
-    
-    if(window.nextStep) window.nextStep();
+    // ❌ NÃO chamar nextStep aqui
 }
+
 
 
 
@@ -300,7 +332,7 @@ function Talk2Henri() {
         ],
         (choice) => {
             PlayerChoice = choice;
-            HenrietteFirstVisit = false; 
+            HenrietteFirstVisit = false; // marca que já visitou
 
             switch(choice) {
                 case "saco1":
@@ -313,10 +345,11 @@ function Talk2Henri() {
                     //window.location.href = "win_game.html";
                     break;
                 case "nao":
-                    cutsceneActive = false;
+                    cutsceneActive = false; // libera movimento
                     YOUshallSPEAK("Tudo bem! Explore o café e volte quando estiver pronto.", "sprites/omori/omStanding_F.png");
                     break;
             }
         }
     );
 }
+

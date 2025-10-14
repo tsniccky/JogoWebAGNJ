@@ -60,6 +60,9 @@ tissues.src = "sprites/tissuebox.png";
 const television = new Image();
 television.src = "sprites/laptop.png";
 
+const waiter = new Image();
+waiter.src = "sprites/waiter.png";
+
 // Initial draw --------------------------------------------------------------------------
 
 player.onload = () => {
@@ -142,15 +145,7 @@ function drawplayer(x, y) {
             case "tissues": ctx.drawImage(tissues, obj.x, obj.y, obj.width, obj.height); break;
             case "television": ctx.drawImage(television, obj.x, obj.y, obj.width, obj.height); break;
             case "lightbulb": ctx.drawImage(lightbulb, obj.x, obj.y, obj.width, obj.height); break;
-            case "waiter":
-                ctx.beginPath();
-                const centerX = obj.x + obj.width/2;
-                const centerY = obj.y + obj.height/2;
-                ctx.arc(centerX, centerY, 10, 0, Math.PI*2);
-                ctx.fillStyle = "green";
-                ctx.fill();
-                ctx.closePath();
-                break;
+            case "waiter": ctx.drawImage(waiter, obj.x, obj.y, obj.width, obj.height); break;
         }
     }
 

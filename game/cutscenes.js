@@ -343,7 +343,7 @@ document.addEventListener('keydown', (e) => {
         if (window.nextStep) window.nextStep();
     }
 });
-
+*/
 
 function YOUshallSPEAK(text, img) {
     const cutsceneEl = document.querySelector('.cutscene');
@@ -357,7 +357,7 @@ function YOUshallSPEAK(text, img) {
 
     
 }
-*/
+
 
 
 
@@ -401,6 +401,7 @@ function Talk2Henri() {
         }
     );
 }
+
 
 
 

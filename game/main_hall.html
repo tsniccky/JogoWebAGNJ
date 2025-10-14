@@ -161,5 +161,16 @@
     <script src="cutscenes.js"></script>
     <script src="DialogueOptionManagement.js"></script>
     <script src="InteractionHandling.js"></script>
+
+    <script
+    let bgMusic = new Audio("musica.mp3");
+bgMusic.loop = true;
+bgMusic.volume = 1.0;
+document.addEventListener("click", () => {
+    bgMusic.play();
+}, { once: true });
+    </script>
+    
 </body>
 </html>
+

@@ -1,67 +1,18 @@
-// CUTSCENE MECHANICS ----------------------------------------------------------------
-let lines = [];
-let options = [];
-let PlayerChoice = "";
-localStorage.setItem("CompletedTutorial", false);
-const PlayerName = localStorage.getItem("PlayerName");
-
-/*function YOUshallSPEAK(text, img) {
-    const cutsceneQuery = document.querySelector('.cutscene');
-    cutsceneQuery.style.display = 'block';
-    document.querySelector('.cutsceneDialogue').innerHTML = text;
-    document.querySelector('.cutsceneImg').src = img;
-}
-
-function playCutscene(lines, cutsceneName) {
-    let currentStep = 0;
-    console.log("Comencing cutscene - " + cutsceneName);
-    function nextStep() {
-        if (currentStep < lines.length) {
-            const step = lines[currentStep];
-            currentStep++;
-            step();
-        } else {
-            console.log("Finished Cutscene");
-            document.querySelector('.cutscene').style.display = 'none';
-            document.removeEventListener('keydown', onKey);
-        }
-    }
-
-    function onKey(e) {
-        if (e.key === 'Enter') nextStep();
-    }
-
-    window.nextStep = nextStep;
-
-    document.addEventListener('keydown', onKey);
-
-// expose both to other scripts
-    document.addEventListener('keydown', onKey);
-
-    // expose both to other scripts
-    window.nextStep = nextStep;
-    window.pauseCutsceneInput = () => document.removeEventListener('keydown', onKey);
-    window.resumeCutsceneInput = () => document.addEventListener('keydown', onKey);
-
-    nextStep();
-
-}*/
-
 // CUTSCENES ----------------------------------------------------------------
 
 function tutorial() {
 
     lines = [
         () => YOUshallSPEAK("Boa tarde, como posso ajudar?", "sprites/omori/omStanding_F.png"),
-        () => YOUshallSPEAK("Olá, estou um pouco perdido…", "sprites/jogador.webp"),
+        () => YOUshallSPEAK("Olá, estou um pouco perdido…", "sprites/cat.png"),
         () => YOUshallSPEAK("Ah, sim, entendo bem… Bom, seja bem vindo ao Café Fantôme.", "sprites/omori/omStanding_F.png"),
-        () => YOUshallSPEAK("Agradeço, mas gostaria de voltar para casa-", "sprites/jogador.webp"),
+        () => YOUshallSPEAK("Agradeço, mas gostaria de voltar para casa-", "sprites/cat.png"),
         () => YOUshallSPEAK("Sinto muito, meu caro, mas pelo visto não sabe as regras do jogo?", "sprites/omori/omStanding_F.png"),
-        () => YOUshallSPEAK("Jogo?", "sprites/jogador.webp"),
+        () => YOUshallSPEAK("Jogo?", "sprites/cat.png"),
         () => YOUshallSPEAK("A única forma de ir embora é escolhendo o café certo para sua última xícara. Para isso, tens 2 opções de café antes: Caffè Latte, formado por uma suave e refrescante bebida com o equilíbrio perfeito de um café expresso,  leite e toda a cremosidade da espuma do leite.", "sprites/omori/omStanding_F.png"),
         () => YOUshallSPEAK("E por fim o café Mocha, parecido com cappuccino, mistura de expresso, leite vaporizado e espuma de leite. A diferença é que pode ir chocolate, mas você decide conforme seu gosto.", "sprites/omori/omStanding_F.png"),
         () => YOUshallSPEAK("Porém adianto, tenha cautela ao escolher, somente poderá escolher o mesmo uma vez. Dica: vá primeiro de Caffè Latte. Caso precise, pode se dirigir ao banheiro quantas vezes quiser, apenas venha aqui que o levamos.", "sprites/omori/omStanding_F.png"),
-        () => YOUshallSPEAK("Certo. Então eu quero um…", "sprites/jogador.webp"),
+        () => YOUshallSPEAK("Certo. Então eu quero um…", "sprites/cat.png"),
         () => YOUshallSPEAK("Antes que eu me esqueça, cuide o que faz ou fala por aí… Ah-", "sprites/omori/omStanding_F.png"),
         () => {YOUshallSPEAK("Boa noite, Waiter.", "sprites/omori/omStanding_F.png");
             localStorage.setItem("CompletedTutorial", true);},
@@ -74,7 +25,7 @@ function tutorial() {
         playCutscene(lines, "TUTORIAL");
     } else {
         console.log("Tutorial already completed");
-        playCutscene(lines, "TUTORIAL");
+        //playCutscene(lines, "TUTORIAL");
         //un-comment to make cutscene play regardless
     }
 }
@@ -84,12 +35,12 @@ function Talk2Waiter() {
 
     const lines = [
         // Linha inicial
-        () => YOUshallSPEAK("...?", "sprites/waiter.webp"),
+        () => YOUshallSPEAK("...?", "sprites/omori/omStanding_F.png"),
 
         // Escolha do café
         () => YOUshallCHOOSE(
             "Ahn.. eu gostaria de...",
-            "sprites/jogador.webp",
+            "sprites/cat.png",
             [
                 { text: "Um Caffè Latte", value: "Caffè Latte" },
                 { text: "Um Mocha", value: "Mocha" },
@@ -99,7 +50,7 @@ function Talk2Waiter() {
                 PlayerChoice = choice; // salva escolha global
 
                 // Mostra fala do jogador sobre a escolha
-                YOUshallSPEAK("Você escolheu um " + choice + ".", "sprites/waiter.webp");
+                YOUshallSPEAK("Você escolheu um " + choice + ".", "sprites/omori/omStanding_F.png");
 
                 // Continua a cutscene
                 nextStep();
@@ -110,13 +61,13 @@ function Talk2Waiter() {
         () => {
             switch(PlayerChoice) {
                 case "Caffè Latte":
-                    YOUshallSPEAK("O Barista alcança ao Waiter um Caffè Latte.", "sprites/waiter.webp");
+                    YOUshallSPEAK("O Barista alcança ao Waiter um Caffè Latte.", "sprites/omori/omStanding_F.png");
                     break;
                 case "Mocha":
-                    YOUshallSPEAK("O Barista alcança ao Waiter um Mocha.", "sprites/waiter.webp");
+                    YOUshallSPEAK("O Barista alcança ao Waiter um Mocha.", "sprites/omori/omStanding_F.png");
                     break;
                 case "Back":
-                    YOUshallSPEAK('O Waiter olha pro Barista e faz um sinal de "Não".', "sprites/waiter.webp");
+                    YOUshallSPEAK('O Waiter olha pro Barista e faz um sinal de "Não".', "sprites/omori/omStanding_F.png");
                     break;
             }
         },
@@ -125,13 +76,13 @@ function Talk2Waiter() {
         () => {
             switch(PlayerChoice) {
                 case "Mocha":
-                    window.lojogadoriwebphref = "stock.html";
+                    window.location.href = "stock.html";
                     break;
                 case "Caffè Latte":
-                    window.lojogadoriwebphref = "game_room.html";
+                    window.location.href = "game_room.html";
                     break;
                 case "Back":
-                    YOUshallSPEAK("O Barista acena com a cabeça.", "sprites/waiter.webp");
+                    YOUshallSPEAK("O Barista acena com a cabeça.", "sprites/omori/omStanding_F.png");
                     break;
             }
         }
@@ -144,10 +95,10 @@ function Talk2Waiter() {
 function Talk2JNecker1() {
 
     lines = [
-        () => YOUshallSPEAK("Quem- O que é você?", "sprites/jogador.webp"),
+        () => YOUshallSPEAK("Quem- O que é você?", "sprites/cat.png"),
         () => YOUshallSPEAK("J. Necker, responsável pela contabilidade e departamento de recursos espectrais.", "sprites/omori/omStanding_F.png"),
         () => YOUshallSPEAK("Seja muito bem vindo, " + PlayerName + ".", "sprites/omori/omStanding_F.png"),
-        () => YOUshallSPEAK("!!", "sprites/jogador.webp"),
+        () => YOUshallSPEAK("!!", "sprites/cat.png"),
         () => YOUshallSPEAK("Ah, não se preocupe. Não é o único. Sei o nome de cada alma que pisa neste café.", "sprites/omori/omStanding_F.png"),
         () => YOUshallCHOOSE("Agora, vamos às questões? O café está esfriando.", "sprites/omori/omStanding_F.png",
             [
@@ -355,7 +306,7 @@ function YOUshallSPEAK(text, img) {
     const dialogueImg = document.querySelector('.cutsceneImg');
     dialogueImg.src = img;
 
-    
+    // ❌ NÃO chamar nextStep aqui
 }
 
 
@@ -387,11 +338,11 @@ function Talk2Henri() {
                 case "saco1":
                 case "saco2":
                     YOUshallSPEAK("Você escolheu o " + choice + "… errou! Infelizmente. Mas talvez possamos ser amigos?...", "sprites/omori/omStanding_F.png");
-                    window.lojogadoriwebphref = "game_over.html"; 
+                    ///window.location.href = "game_over.html"; 
                     break;
                 case "saco3":
                     YOUshallSPEAK("Você escolheu o Saco 3… Acertou! Parabéns!", "sprites/omori/omStanding_F.png");
-                    window.lojogadoriwebphref = "win_game.html";
+                    //window.location.href = "win_game.html";
                     break;
                 case "nao":
                     cutsceneActive = false; // libera movimento
@@ -401,8 +352,4 @@ function Talk2Henri() {
         }
     );
 }
-
-
-
-
 

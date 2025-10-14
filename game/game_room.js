@@ -53,7 +53,7 @@ const sketchbook = new Image();
 sketchbook.src = "sprites/sketchbook.png"; // agora representa o "finances book"
 
 const henriete = new Image();
-counter1.src = "sprites/henriete.webp;
+counter1.src = "sprites/henriete.webp";
 
 
 
@@ -153,7 +153,7 @@ function drawOmori(x, y) {
             case "lightbulb": ctx.drawImage(lightbulb, obj.x, obj.y, obj.width, obj.height); break;
             case "finances book": ctx.drawImage(sketchbook, obj.x, obj.y, obj.width, obj.height); break;
             case "desk": ctx.strokeRect(obj.x, obj.y, obj.width, obj.height); break;
-            case "henriete": ctx.strokeRect(obj.x, obj.y, obj.width, obj.height); break;
+            case "henriete": ctx.drawImage(henriete, obj.x, obj.y, obj.width, obj.height); break;
         }
     }
 

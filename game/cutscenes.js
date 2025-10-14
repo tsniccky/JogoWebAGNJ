@@ -25,7 +25,7 @@ function tutorial() {
         playCutscene(lines, "TUTORIAL");
     } else {
         console.log("Tutorial already completed");
-        //playCutscene(lines, "TUTORIAL");
+        playCutscene(lines, "TUTORIAL");
         //un-comment to make cutscene play regardless
     }
 }
@@ -306,7 +306,6 @@ function YOUshallSPEAK(text, img) {
     const dialogueImg = document.querySelector('.cutsceneImg');
     dialogueImg.src = img;
 
-    // ❌ NÃO chamar nextStep aqui
 }
 
 
@@ -352,4 +351,5 @@ function Talk2Henri() {
         }
     );
 }
+
 

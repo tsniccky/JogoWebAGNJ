@@ -52,6 +52,10 @@ counter1.src = "sprites/counter1.png";
 const sketchbook = new Image();
 sketchbook.src = "sprites/sketchbook.png"; // agora representa o "finances book"
 
+const henriete = new Image();
+counter1.src = "sprites/henriete.webp;
+
+
 
 
 // Object hitboxes -----------------------------------------------------------------------
@@ -63,7 +67,7 @@ let objects = [
     { name: "plant", x: 515, y: 305, width: 60, height: 50, interactable: true },
     { name: "lightbulb", x: 450, y: 0, width: 32, height: 32, interactable: true },
     { name: "finances book", x: 420, y: 250, width: 32, height: 32, interactable: true },
-    { name: "necker", x: 450, y: 299, width: 20, height: 20, interactable: true }
+    { name: "henriete", x: 450, y: 299, width: 20, height: 20, interactable: true }
 ];
 
 // Spawn Omori perto da porta -----------------------------------------------------------
@@ -149,15 +153,7 @@ function drawOmori(x, y) {
             case "lightbulb": ctx.drawImage(lightbulb, obj.x, obj.y, obj.width, obj.height); break;
             case "finances book": ctx.drawImage(sketchbook, obj.x, obj.y, obj.width, obj.height); break;
             case "desk": ctx.strokeRect(obj.x, obj.y, obj.width, obj.height); break;
-            case "necker":
-                ctx.beginPath();
-                const centerX = obj.x + obj.width / 2;
-                const centerY = obj.y + obj.height / 2;
-                ctx.arc(centerX, centerY, 10, 0, Math.PI*2);
-                ctx.fillStyle = "green";
-                ctx.fill();
-                ctx.closePath();
-                break;
+            case "henriete": ctx.strokeRect(obj.x, obj.y, obj.width, obj.height); break;
         }
     }
 

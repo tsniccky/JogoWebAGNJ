@@ -12,7 +12,7 @@ function YOUshallSPEAK(text, img) {
     document.querySelector('.cutsceneImg').src = img;
 }
 
-function playCutscene(lines, cutsceneName) {
+/*function playCutscene(lines, cutsceneName) {
     let currentStep = 0;
     console.log("Comencing cutscene - " + cutsceneName);
     function nextStep() {
@@ -45,25 +45,26 @@ function playCutscene(lines, cutsceneName) {
 
     nextStep();
 
-}
+}*/
 
 // CUTSCENES ----------------------------------------------------------------
 
 function tutorial() {
 
     lines = [
-        () => YOUshallSPEAK("Boa tarde, como posso ajudar?", "sprites/waiter.webp"),
+        () => YOUshallSPEAK("Boa tarde, como posso ajudar?", "sprites/omori/omStanding_F.png"),
         () => YOUshallSPEAK("Olá, estou um pouco perdido…", "sprites/jogador.webp"),
-        () => YOUshallSPEAK("Ah, sim, entendo bem… Bom, seja bem vindo ao Café Fantôme.", "sprites/waiter.webp"),
+        () => YOUshallSPEAK("Ah, sim, entendo bem… Bom, seja bem vindo ao Café Fantôme.", "sprites/omori/omStanding_F.png"),
         () => YOUshallSPEAK("Agradeço, mas gostaria de voltar para casa-", "sprites/jogador.webp"),
-        () => YOUshallSPEAK("Sinto muito, meu caro, mas pelo visto não sabe as regras do jogo?", "sprites/waiter.webp"),
+        () => YOUshallSPEAK("Sinto muito, meu caro, mas pelo visto não sabe as regras do jogo?", "sprites/omori/omStanding_F.png"),
         () => YOUshallSPEAK("Jogo?", "sprites/jogador.webp"),
-        () => YOUshallSPEAK("A única forma de ir embora é escolhendo o café certo para sua última xícara. Para isso, tens 2 opções de café antes: Caffè Latte, formado por uma suave e refrescante bebida com o equilíbrio perfeito de um café expresso,  leite e toda a cremosidade da espuma do leite.", "sprites/waiter.webp"),
-        () => YOUshallSPEAK("E por fim o café Mocha, parecido com cappuccino, mistura de expresso, leite vaporizado e espuma de leite. A diferença é que pode ir chocolate, mas você decide conforme seu gosto.", "sprites/waiter.webp"),
-        () => YOUshallSPEAK("Porém adianto, tenha cautela ao escolher, somente poderá escolher o mesmo uma vez. Dica: vá primeiro de Caffè Latte. Caso precise, pode se dirigir ao banheiro quantas vezes quiser, apenas venha aqui que o levamos.", "sprites/waiter.webp"),
+        () => YOUshallSPEAK("A única forma de ir embora é escolhendo o café certo para sua última xícara. Para isso, tens 2 opções de café antes: Caffè Latte, formado por uma suave e refrescante bebida com o equilíbrio perfeito de um café expresso,  leite e toda a cremosidade da espuma do leite.", "sprites/omori/omStanding_F.png"),
+        () => YOUshallSPEAK("E por fim o café Mocha, parecido com cappuccino, mistura de expresso, leite vaporizado e espuma de leite. A diferença é que pode ir chocolate, mas você decide conforme seu gosto.", "sprites/omori/omStanding_F.png"),
+        () => YOUshallSPEAK("Porém adianto, tenha cautela ao escolher, somente poderá escolher o mesmo uma vez. Dica: vá primeiro de Caffè Latte. Caso precise, pode se dirigir ao banheiro quantas vezes quiser, apenas venha aqui que o levamos.", "sprites/omori/omStanding_F.png"),
         () => YOUshallSPEAK("Certo. Então eu quero um…", "sprites/jogador.webp"),
-        () => YOUshallSPEAK("Antes que eu me esqueça, cuide o que faz ou fala por aí… Ah-", "sprites/waiter.webp"),
-        () => YOUshallSPEAK("Boa noite, Waiter.", "sprites/jogador.webp"),
+        () => YOUshallSPEAK("Antes que eu me esqueça, cuide o que faz ou fala por aí… Ah-", "sprites/omori/omStanding_F.png"),
+        () => {YOUshallSPEAK("Boa noite, Waiter.", "sprites/omori/omStanding_F.png");
+            localStorage.setItem("CompletedTutorial", true);},
         () => Talk2Waiter()
     ];
 
@@ -318,7 +319,7 @@ function quiz() {
 }
 
 
-/*function playCutscene(lines, nextSceneName) {
+function playCutscene(lines, nextSceneName) {
     cutsceneActive = true;
 
     let i = 0;
@@ -344,7 +345,7 @@ document.addEventListener('keydown', (e) => {
 });
 
 
-function YOUshallSPEAK(text, img) {
+/*/function YOUshallSPEAK(text, img) {
     const cutsceneEl = document.querySelector('.cutscene');
     cutsceneEl.style.display = 'block';
 
@@ -355,8 +356,8 @@ function YOUshallSPEAK(text, img) {
     dialogueImg.src = img;
 
     
-}
-*/
+}*/
+
 
 
 
@@ -400,6 +401,7 @@ function Talk2Henri() {
         }
     );
 }
+
 
 
 

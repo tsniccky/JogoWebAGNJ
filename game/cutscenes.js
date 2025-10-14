@@ -245,3 +245,56 @@ function quiz() {
     playCutscene(lines, "QUIZ");
 
 }
+
+function Talk2HENRIETTE() {
+    lines = [
+        () => YOUshallCHOOSE(
+            "Oiii, tudo bem? Sou Henriette, vou te ajudar na decisão do café. Temos 3 sacos, qual você escolhe?",
+            "sprites/omori/omStanding_F.png",
+            [
+                { text: "Saco 1", value: "saco1" },
+                { text: "Saco 2", value: "saco2" },
+                { text: "Saco 3", value: "saco3" },
+                { text: "Ainda não olhei.", value: "nao" }
+            ],
+            (choice) => {
+                PlayerChoice = choice;
+                nextStep();
+            }
+        ),
+        () => {
+            switch(PlayerChoice) {
+           case "saco1":
+                    YOUshallSPEAK("Você escolheu o Saco 1… hmm, errou! Infelizmente, mas talvez possamos ser amigos? ...", "sprites/omori/omStanding_F.png");
+                    break;
+                case "saco3":
+                    YOUshallSPEAK("Você escolheu o Saco 3… Acertou! Parabéns!", "sprites/omori/omStanding_F.png");
+                    break;
+                case "saco2":
+                    YOUshallSPEAK("Você escolheu o Saco 2… errou! Infelizmente, mas talvez possamos ser amigos? ...", "sprites/omori/omStanding_F.png");
+                    break;
+                case "nao":
+                    YOUshallSPEAK("Okay. Olhe bem e volte depois para escolher!", "sprites/omori/omStanding_F.png");
+                    break;
+            }
+            nextStep();
+        },
+        () => {
+            switch(PlayerChoice) {
+                case "saco1":
+                case "saco2":
+                    window.location.href = "game_over.html"; 
+                     break;
+                case "nao":
+                    YOUshallSPEAK("Não decidiu? Volte quando estiver pronto!", "sprites/omori/omStanding_F.png");
+                    break;
+                case "saco3":
+                    YOUshallSPEAK("Perfeito! Agora você pode seguir para preparar o café.", "sprites/omori/omStanding_F.png");
+                    window.location.href = "win_game.html";
+                    break;
+            }
+        }
+    ]; 
+playCutscene(lines, "Talk2HENRIETTE");
+}
+

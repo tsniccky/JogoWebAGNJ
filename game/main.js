@@ -251,7 +251,7 @@ function handleObjectInteraction(objectName) {
             // Special case - door can lead to different rooms
             if (confirm("Do you want to go through the door?")) {
                 // Change to main_hall or bathroom depending on context
-                window.location.href = "salas/main_hall.html";
+                window.location.href = "main_hall.html";
             }
             return;
             

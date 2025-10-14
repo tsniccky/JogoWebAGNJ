@@ -25,7 +25,7 @@ function handleObjectInteraction(objectName) {
     switch (objectName) {
         case "door1":
             if (confirm("Do you want to go to the bathroom?")) {
-                window.location.href = "salas/banheiro.html";
+                window.location.href = "banheiro.html";
             }
             return;
             

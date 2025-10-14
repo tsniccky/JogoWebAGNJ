@@ -58,8 +58,8 @@ function Talk2Waiter() {
         },
         () => {
             switch(PlayerChoice) {
-            case ("Mocha"): window.location.href = "salas/stock.html"; break;
-            case ("Caffè Latte"): window.location.href = "salas/game_room.html"; break;
+            case ("Mocha"): window.location.href = "stock.html"; break;
+            case ("Caffè Latte"): window.location.href = "game_room.html"; break;
             case ("Back"): YOUshallSPEAK("O Barista acena com a cabeça.", "sprites/omori/omStanding_F.png"); break;
             };
         }

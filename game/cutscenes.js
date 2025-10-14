@@ -338,11 +338,11 @@ function Talk2Henri() {
                 case "saco1":
                 case "saco2":
                     YOUshallSPEAK("Você escolheu o " + choice + "… errou! Infelizmente. Mas talvez possamos ser amigos?...", "sprites/omori/omStanding_F.png");
-                    ///window.location.href = "game_over.html"; 
+                    window.location.href = "game_over.html"; 
                     break;
                 case "saco3":
                     YOUshallSPEAK("Você escolheu o Saco 3… Acertou! Parabéns!", "sprites/omori/omStanding_F.png");
-                    //window.location.href = "win_game.html";
+                    window.location.href = "win_game.html";
                     break;
                 case "nao":
                     cutsceneActive = false; // libera movimento
@@ -352,6 +352,7 @@ function Talk2Henri() {
         }
     );
 }
+
 
 
 

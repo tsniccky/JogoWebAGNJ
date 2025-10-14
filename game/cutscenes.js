@@ -5,14 +5,14 @@ let PlayerChoice = "";
 localStorage.setItem("CompletedTutorial", false);
 const PlayerName = localStorage.getItem("PlayerName");
 
-function YOUshallSPEAK(text, img) {
+/*function YOUshallSPEAK(text, img) {
     const cutsceneQuery = document.querySelector('.cutscene');
     cutsceneQuery.style.display = 'block';
     document.querySelector('.cutsceneDialogue').innerHTML = text;
     document.querySelector('.cutsceneImg').src = img;
 }
 
-/*function playCutscene(lines, cutsceneName) {
+function playCutscene(lines, cutsceneName) {
     let currentStep = 0;
     console.log("Comencing cutscene - " + cutsceneName);
     function nextStep() {
@@ -345,7 +345,7 @@ document.addEventListener('keydown', (e) => {
 });
 
 
-/*/function YOUshallSPEAK(text, img) {
+function YOUshallSPEAK(text, img) {
     const cutsceneEl = document.querySelector('.cutscene');
     cutsceneEl.style.display = 'block';
 
@@ -356,7 +356,7 @@ document.addEventListener('keydown', (e) => {
     dialogueImg.src = img;
 
     
-}*/
+}
 
 
 
@@ -401,6 +401,7 @@ function Talk2Henri() {
         }
     );
 }
+
 
 
 

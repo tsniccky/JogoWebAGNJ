@@ -31,10 +31,10 @@ let objectStates = {
 // Sprite loading ------------------------------------------------------------------------
 
 const omori = new Image();
-omori.src = "sprites/omori/omStanding_F.png";
+omori.src = "sprites/jogador.webp";
 
 const omoriRun = new Image();
-omoriRun.src = "sprites/omori/omRunning_F.png";
+omoriRun.src = "sprites/jogador.webp";
 
 const door = new Image();
 door.src = "sprites/door.png";

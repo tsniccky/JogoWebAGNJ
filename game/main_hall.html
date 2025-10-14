@@ -1,34 +1,165 @@
 <!DOCTYPE html>
-    <html>
-        <head>
-            
-            <meta charset="utf-8">
-            <title>Café Fantôme</title>
-            <link rel="stylesheet" href="style.css">
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <title>Café Fantôme</title>
+    <style>
+        body {
+            image-rendering: pixelated;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+        }
 
-        </head>
+        h1 {
+            font-size: 2em;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+            margin-bottom: 0;
+            padding-bottom: 0;
+            margin-top: 0;
+            padding-top: 0;
+        }
 
-        <body>
+        p {
+            font-family: 'Courier New', Courier, monospace;
+            margin-top: 0;
+            padding-top: 0;
+        }
 
-            <h1>C A F É _ F A N T Ô M E</h1>
-            <p>Press arrows to move and E to interact</p>
-            <canvas id="Canvas" width="960" height="540"></canvas>
-            <div class="dialogue">Dialogue Text<div class="OptionsContainer" style="display:none;"></div></div>
-            
-            <div class="cutscene">
-                <img class="cutsceneImg" src="sprites/omori/omStanding_F.png">
-                <div class="cutsceneDialogueContainer">
-                <div class="cutsceneDialogue">Cutscene Text</div>
-                <div id="cutsceneOptions" class="OptionsContainer"></div>
-            </div>
-            </div>
-            
-            <script src="main_hall.js"></script>
-            <script src="dialogueSystem.js"></script>
-            <script src="cutscenes.js"></script>
-            <script src="DialogueOptionManagement.js"></script>
-            <script src="InteractionHandling.js"></script>
+        #white_room {
+            border: 3px solid black;
+            height: 300px;
+            width: 300px;
+        }
 
-        </body>
+        #Canvas {
+            border: 1em solid black;
+            image-rendering: pixelated;
+            height: 540px;
+            width: 960px;
+        }
 
-    </html>
+        .dialogue {
+            /* positioning and styling */
+            position: absolute;
+            top: 78%;
+            left: 50%;
+            bottom: 15px;
+            transform: translateX(-50%);
+            background-color: black;
+            border: solid white 3px;
+            color: white;
+            padding: 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.2em;
+            width: 60%;
+            /* setting behaviors */
+            max-height: 100px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .cutscene {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .cutsceneDialogue {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding-bottom: 0;
+            width: 97%;
+            background-color: black;
+            color: white;
+            margin-top: 20px;
+            margin-left: 20px;
+            padding: 5px;
+            max-height: 200px; /* allows space for options */
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1em;
+            justify-content: space-between;
+        }
+
+        .cutsceneImg {
+            position: absolute;
+            bottom: 10%;
+            right: 10%;
+            transform: translateX(-50%);
+            height: 40%;
+        }
+
+        .cutsceneDialogueContainer {
+            position: absolute;
+            top: 78%;
+            left: 50%;
+            bottom: 15px;
+            transform: translateX(-50%);
+            background-color: black;
+            border: solid white 3px;
+            color: white;
+            padding: 20px;
+            width: 60%;
+            max-height: 200px; /* allows space for options */
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.2em;
+        }
+
+        .OptionsContainer {
+            margin-top: 33px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .option {
+            color: white;
+            padding: 3px;
+            border-radius: 4px;
+            margin-bottom: 0;
+        }
+
+        .option.highlighted {
+            background-color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>C A F É _ F A N T Ô M E</h1>
+    <p>Press arrows to move and E to interact</p>
+    <canvas id="Canvas" width="960" height="540"></canvas>
+
+    <div class="dialogue">
+        Dialogue Text
+        <div class="OptionsContainer" style="display:none;"></div>
+    </div>
+
+    <div class="cutscene">
+        <img class="cutsceneImg" src="sprites/omori/omStanding_F.png" alt="Omori">
+        <div class="cutsceneDialogueContainer">
+            <div class="cutsceneDialogue">Cutscene Text</div>
+            <div id="cutsceneOptions" class="OptionsContainer"></div>
+        </div>
+    </div>
+
+    <script src="main_hall.js"></script>
+    <script src="dialogueSystem.js"></script>
+    <script src="cutscenes.js"></script>
+    <script src="DialogueOptionManagement.js"></script>
+    <script src="InteractionHandling.js"></script>
+</body>
+</html>

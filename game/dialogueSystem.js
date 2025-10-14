@@ -28,7 +28,11 @@ function handleObjectInteraction(objectName) {
                 window.location.href = "banheiro.html";
             }
             return;
-            
+        case "door":
+            if (confirm("Do you want to go back")) {
+                window.location.href = "main_hall.html";
+            }
+            return;
         case "cat":
         case "sketchbook":
         case "tissues":
@@ -48,4 +52,5 @@ function handleObjectInteraction(objectName) {
             Talk2JNecker2();
             return;
     }
+
 }

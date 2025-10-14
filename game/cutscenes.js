@@ -247,7 +247,7 @@ function quiz() {
                 { text: "Revelar diferentes características, sabores e aromas", value: "a opção 2" },
                 { text: "Diminuir o nível de cafeína...?", value: "a opção 3"}
             ],
-            (PlayerChoice) => {YOUshallSPEAK("Você escolheu '" + PlayerChoice + "'. Dica: café robusta...", "sprites/omori/omStanding_F.png");
+            (PlayerChoice) => {YOUshallSPEAK("Parabéns! Uma dica: lembre-se do café robusta...", "sprites/omori/omStanding_F.png");
                 nextStep(); // continue to the next line in the cutscene
             }),
         () => {
@@ -352,5 +352,6 @@ function Talk2Henri() {
         }
     );
 }
+
 
 

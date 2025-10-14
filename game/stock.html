@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+
+
+    <!DOCTYPE html>
     <html>
         <head>
             
@@ -12,15 +14,23 @@
 
             <h1>Stock</h1>
             <p>Press arrows to move and E to interact</p>
-            <canvas id="Canvas" width="960" height="540">
-                <div id="white_room"></div>
-            </canvas>
-            <a href="main_hall.html">main hall</a>
-
+            <canvas id="Canvas" width="960" height="540"></canvas>
+            <div class="dialogue">Dialogue Text<div class="OptionsContainer" style="display:none;"></div></div>
+            
+            <div class="cutscene">
+                <img class="cutsceneImg" src="sprites/omori/omStanding_F.png">
+                <div class="cutsceneDialogueContainer">
+                <div class="cutsceneDialogue">Cutscene Text</div>
+                <div id="cutsceneOptions" class="OptionsContainer"></div>
+            </div>
+            </div>
+            
             <script src="stock.js"></script>
             <script src="dialogueSystem.js"></script>
-<script src="cutscenes.js"></script>
-<script src="DialogueOptionManagement.js"></script>
+            <script src="cutscenes.js"></script>
+            <script src="DialogueOptionManagement.js"></script>
+            <script src="InteractionHandling.js"></script>
 
         </body>
+
     </html>

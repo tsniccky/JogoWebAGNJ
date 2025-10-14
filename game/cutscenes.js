@@ -306,7 +306,7 @@ function YOUshallSPEAK(text, img) {
     const dialogueImg = document.querySelector('.cutsceneImg');
     dialogueImg.src = img;
 
-    // ❌ NÃO chamar nextStep aqui
+    
 }
 
 

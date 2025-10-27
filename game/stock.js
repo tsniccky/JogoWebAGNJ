@@ -33,8 +33,8 @@ let objectStates = {
 };
 
 // Sprites
-const omori = new Image(); omori.src = "sprites/omori/omStanding_F.png";
-const omoriRun = new Image(); omoriRun.src = "sprites/omori/omRunning_F.png";
+const omori = new Image(); omori.src = "sprites/jogador.webp";
+const omoriRun = new Image(); omoriRun.src = "sprites/jogador.webp";
 const door = new Image(); door.src = "sprites/door.png";
 const plant2 = new Image(); plant2.src = "sprites/plant.png";
 const lightbulb = new Image(); lightbulb.src = "sprites/lightbulb.png";

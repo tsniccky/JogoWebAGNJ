@@ -44,6 +44,7 @@ const saco2 = new Image(); saco2.src = "sprites/saco2.png";
 const saco1 = new Image(); saco1.src = "sprites/saco1.png";
 const saco3 = new Image(); saco3.src = "sprites/saco3.png";
 const counter3 = new Image(); counter3.src = "sprites/counter3.png";
+const Henriette = new Image(); Henriette.src = "sprites/henriete.webp";
 
 let currentOmori = omori;
 
@@ -95,11 +96,7 @@ function drawOmori(x, y) {
             case "saco1": ctx.drawImage(saco1,obj.x,obj.y,obj.width,obj.height); break;
             case "saco2": ctx.drawImage(saco2,obj.x,obj.y,obj.width,obj.height); break;
             case "lightbulb": ctx.drawImage(lightbulb,obj.x,obj.y,obj.width,obj.height); break;
-            case "Henriette": 
-                ctx.beginPath();
-                ctx.arc(obj.x+obj.width/2,obj.y+obj.height/2,10,0,Math.PI*2);
-                ctx.fillStyle="purple"; ctx.fill(); ctx.closePath();
-                break;
+            case "Henriette": ctx.drawImage(Henriette, obj.x, obj.y, obj.width, obj.height); break;
         }
     }
 

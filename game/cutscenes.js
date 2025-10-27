@@ -93,49 +93,69 @@ function Talk2Waiter() {
 
 
 function Talk2JNecker1() {
-
     lines = [
         () => YOUshallSPEAK("Quem- O que é você?", "sprites/jogador.webp"),
         () => YOUshallSPEAK("J. Necker, responsável pela contabilidade e departamento de recursos espectrais.", "sprites/necker.webp"),
         () => YOUshallSPEAK("Seja muito bem vindo, " + PlayerName + ".", "sprites/necker.webp"),
         () => YOUshallSPEAK("!!", "sprites/jogador.webp"),
         () => YOUshallSPEAK("Ah, não se preocupe. Não é o único. Sei o nome de cada alma que pisa neste café.", "sprites/necker.webp"),
-        () => YOUshallCHOOSE("Agora, vamos às questões? O café está esfriando.", "sprites/necker.webp",
+        () => YOUshallCHOOSE(
+            "Agora, vamos às questões? O café está esfriando.",
+            "sprites/necker.webp",
             [
                 { text: "Sim", value: "sim" },
                 { text: "Ainda não", value: "não" },
                 { text: "Questões? Não estou aqui para ser interrogado.", value: "huh" }
             ],
-            (PlayerChoice) => {YOUshallSPEAK("Você escolheu '" + PlayerChoice + "'.", "sprites/necker.webp");
-                nextStep(); // continue to the next line in the cutscene
-            }),
+            (PlayerChoice) => {
+                YOUshallSPEAK("Você escolheu '" + PlayerChoice + "'.", "sprites/necker.webp");
+                nextStep(); // continua a cutscene
+
+                // log pra debug
+                console.log("DEBUG: escolha JNecker1 = ", PlayerChoice);
+
+                // inicia temporizador imediatamente se escolheu "sim" (case-insensitive)
+                if (typeof PlayerChoice === "string" && PlayerChoice.toLowerCase() === "sim") {
+                    if (!window.cancelarTimer) {
+                        window.cancelarTimer = iniciarTemporizador();
+                        console.log("DEBUG: temporizador iniciado via callback da escolha");
+                    }
+                }
+            }
+        ),
         () => {
-            switch(PlayerChoice) {
-            case ("sim"):
-                YOUshallSPEAK("Ótimo. Vamos à primeira então.", "sprites/waiter.webp");;
-                break;
-            case ("não"):
-                YOUshallSPEAK("Certo. Só lembre que o tempo está correndo.", "sprites/waiter.webp");
-                break;
-            case ("huh"):
-                YOUshallSPEAK("... sussurro Olha, eu só tô tentando te ajudar. Só confie em mim e responda, sim?", "sprites/waiter.webp");
-                break;
+            switch (PlayerChoice) {
+                case ("sim"):
+                    YOUshallSPEAK("Ótimo. Vamos à primeira então.", "sprites/waiter.webp");
+                    // nota: iniciamos o temporizador no callback acima para maior confiabilidade
+                    break;
+                case ("não"):
+                    YOUshallSPEAK("Certo. Só lembre que o tempo está correndo.", "sprites/waiter.webp");
+                    break;
+                case ("huh"):
+                    YOUshallSPEAK("... sussurro Olha, eu só tô tentando te ajudar. Só confie em mim e responda, sim?", "sprites/waiter.webp");
+                    break;
             }
         },
         () => {
-            switch(PlayerChoice) {
-            case ("sim"):
-                quiz();
-                break;
-            case ("huh"):
-                quiz();
-                break;
+            switch (PlayerChoice) {
+                case ("sim"):
+                case ("huh"):
+                    // cancela o temporizador quando o quiz realmente começa
+                    if (window.cancelarTimer) {
+                        window.cancelarTimer();
+                        window.cancelarTimer = null;
+                    }
+                    quiz();
+                    break;
             }
         }
     ];
 
     playCutscene(lines, "Talk2JNecker1");
 }
+
+
 
 function Talk2JNecker2() {
 
@@ -354,5 +374,28 @@ function Talk2Henri() {
 }
 
 
+function iniciarTemporizador() {
+    let tempo = 30;
+    const temporizadorEl = document.getElementById("temporizador");
+    temporizadorEl.style.display = "block";
+    temporizadorEl.textContent = tempo;
+
+    const intervalo = setInterval(() => {
+        tempo--;
+        temporizadorEl.textContent = tempo;
+
+        if (tempo <= 0) {
+            clearInterval(intervalo);
+            temporizadorEl.textContent = "Tempo esgotado!";
+            setTimeout(() => (window.location.href = "main_hall.html"), 1000);
+        }
+    }, 1000);
+
+    // retorna função pra cancelar
+    return () => {
+        clearInterval(intervalo);
+        temporizadorEl.style.display = "none";
+    };
+}
 
 

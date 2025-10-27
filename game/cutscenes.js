@@ -96,17 +96,17 @@ function Talk2JNecker1() {
 
     lines = [
         () => YOUshallSPEAK("Quem- O que é você?", "sprites/jogador.webp"),
-        () => YOUshallSPEAK("J. Necker, responsável pela contabilidade e departamento de recursos espectrais.", "sprites/waiter.webp"),
-        () => YOUshallSPEAK("Seja muito bem vindo, " + PlayerName + ".", "sprites/waiter.webp"),
+        () => YOUshallSPEAK("J. Necker, responsável pela contabilidade e departamento de recursos espectrais.", "sprites/henriete.webp"),
+        () => YOUshallSPEAK("Seja muito bem vindo, " + PlayerName + ".", "sprites/henriete.webp"),
         () => YOUshallSPEAK("!!", "sprites/jogador.webp"),
-        () => YOUshallSPEAK("Ah, não se preocupe. Não é o único. Sei o nome de cada alma que pisa neste café.", "sprites/waiter.webp"),
-        () => YOUshallCHOOSE("Agora, vamos às questões? O café está esfriando.", "sprites/waiter.webp",
+        () => YOUshallSPEAK("Ah, não se preocupe. Não é o único. Sei o nome de cada alma que pisa neste café.", "sprites/henriete.webp"),
+        () => YOUshallCHOOSE("Agora, vamos às questões? O café está esfriando.", "sprites/henriete.webp",
             [
                 { text: "Sim", value: "sim" },
                 { text: "Ainda não", value: "não" },
                 { text: "Questões? Não estou aqui para ser interrogado.", value: "huh" }
             ],
-            (PlayerChoice) => {YOUshallSPEAK("Você escolheu '" + PlayerChoice + "'.", "sprites/waiter.webp");
+            (PlayerChoice) => {YOUshallSPEAK("Você escolheu '" + PlayerChoice + "'.", "sprites/henriete.webp");
                 nextStep(); // continue to the next line in the cutscene
             }),
         () => {
@@ -140,7 +140,7 @@ function Talk2JNecker1() {
 function Talk2JNecker2() {
 
     lines = [
-        () => YOUshallCHOOSE("Pronto para as perguntas?", "sprites/waiter.webp",
+        () => YOUshallCHOOSE("Pronto para as perguntas?", "sprites/henriete.webp",
             [
                 { text: "Sim", value: "sim" },
                 { text: "Ainda não", value: "não" },
@@ -151,10 +151,10 @@ function Talk2JNecker2() {
         () => {
             switch(PlayerChoice) {
             case ("sim"):
-                YOUshallSPEAK("Ótimo. Vamos à primeira então.", "sprites/waiter.webp");;
+                YOUshallSPEAK("Ótimo. Vamos à primeira então.", "sprites/henriete.webp");
                 break;
             case ("não"):
-                YOUshallSPEAK("Okay. Não diga que não tentei te avisar.", "sprites/waiter.webp");
+                YOUshallSPEAK("Okay. Não diga que não tentei te avisar.", "sprites/henriete.webp");
                 break;
             }
         },
@@ -173,93 +173,93 @@ function Talk2JNecker2() {
 function quiz() {
 
     lines = [
-        () => YOUshallCHOOSE("Qual o maior produtor de café do mundo?", "sprites/waiter.webp",
+        () => YOUshallCHOOSE("Qual o maior produtor de café do mundo?", "sprites/henriete.webp",
             [
                 { text: "Vietnã", value: "Vietnã" },
                 { text: "Brasil", value: "Brasil" },
                 { text: "Haiti", value: "huh" }
             ],
-            (PlayerChoice) => {YOUshallSPEAK("Você escolheu '" + PlayerChoice + "'.", "sprites/waiter.webp");
+            (PlayerChoice) => {YOUshallSPEAK("Você escolheu '" + PlayerChoice + "'.", "sprites/henriete.webp");
                 nextStep(); // continue to the next line in the cutscene
             }),
         () => {
             switch(PlayerChoice) {
             case ("Vietnã"):
-                YOUshallSPEAK("okay...", "sprites/waiter.webp");
+                YOUshallSPEAK("okay...", "sprites/henriete.webp");
                 break;
             case ("Brasil"):
-                YOUshallSPEAK("Correto.", "sprites/waiter.webp");
+                YOUshallSPEAK("Correto.", "sprites/henriete.webp");
                 break;
             case ("huh"):
-                YOUshallSPEAK("Tá...", "sprites/waiter.webp");
+                YOUshallSPEAK("Tá...", "sprites/henriete.webp");
                 quiz();
                 break;
             }
         },
 
 
-        () => YOUshallCHOOSE("Qual a diferença entre café especial e gourmet?", "sprites/waiter.webp",
+        () => YOUshallCHOOSE("Qual a diferença entre café especial e gourmet?", "sprites/henriete.webp",
             [
                 { text: "No especial vão sementes maduras, enquanto no gourmet tem poucos grãos ruins.", value: "a opção 1" },
                 { text: "No especial é só café arábica, enquanto o gourmet utiliza só o robusta.", value: "a opção 2" } 
             ],
-            (PlayerChoice) => {YOUshallSPEAK("Você escolheu '" + PlayerChoice + "'.", "sprites/waiter.webp");
+            (PlayerChoice) => {YOUshallSPEAK("Você escolheu '" + PlayerChoice + "'.", "sprites/henriete.webp");
                 nextStep(); // continue to the next line in the cutscene
             }),
         () => {
             switch(PlayerChoice) {
             case ("a opção 1"):
-                YOUshallSPEAK("Perfeito.", "sprites/waiter.webp");
+                YOUshallSPEAK("Perfeito.", "sprites/henriete.webp");
                 break;
-         
-                case ("a opção 2"):
-                YOUshallSPEAK("Você sabe que gourmet quer dizer algo mais requintado, certo?", "sprites/waiter.webp");
+
+            case ("a opção 2"):
+                YOUshallSPEAK("Você sabe que gourmet quer dizer algo mais requintado, certo?", "sprites/henriete.webp");
                 break;
             }
         },
 
-        () => YOUshallCHOOSE("O que acontece quando moemos o café na hora do preparo da bebida?", "sprites/waiter.webp",
+        () => YOUshallCHOOSE("O que acontece quando moemos o café na hora do preparo da bebida?", "sprites/henriete.webp",
             [
                 { text: "Ele fica mais cheiroso", value: "a opção 1" },
                 { text: "O nível de açúcar reduz", value: "a opção 2" },
                 { text: "O teor de cafeína aumenta", value: "a opção 3" } 
             ],
-            (PlayerChoice) => {YOUshallSPEAK("Você escolheu '" + PlayerChoice + "'.", "sprites/waiter.webp");
+            (PlayerChoice) => {YOUshallSPEAK("Você escolheu '" + PlayerChoice + "'.", "sprites/henriete.webp");
                 nextStep(); // continue to the next line in the cutscene
             }),
         () => {
             switch(PlayerChoice) {
             case ("a opção 1"):
-                YOUshallSPEAK("Certo.", "sprites/waiter.webp");
+                YOUshallSPEAK("Certo.", "sprites/henriete.webp");
                 break;
             case ("a opção 2"):
-                YOUshallSPEAK("Ele só te encara", "sprites/waiter.webp");
+                YOUshallSPEAK("Ele só te encara", "sprites/henriete.webp");
                 break;
             case ("a opção 3"):
-                YOUshallSPEAK("Não, isso depende do grão.", "sprites/waiter.webp");
+                YOUshallSPEAK("Não, isso depende do grão.", "sprites/henriete.webp");
                 break;
             }
         },
 
-        () => YOUshallCHOOSE("E por último, qual o principal motivo para torrar o café?", "sprites/waiter.webp",
+        () => YOUshallCHOOSE("E por último, qual o principal motivo para torrar o café?", "sprites/henriete.webp",
             [
                 { text: "Tirar possíveis impurezas dos grãos", value: "a opção 1" },
                 { text: "Revelar diferentes características, sabores e aromas", value: "a opção 2" },
                 { text: "Diminuir o nível de cafeína...?", value: "a opção 3"}
             ],
-            (PlayerChoice) => {YOUshallSPEAK("Parabéns! Uma dica: lembre-se do café robusta...", "sprites/waiter.webp");
+            (PlayerChoice) => {YOUshallSPEAK("Parabéns! Uma dica: lembre-se do café robusta...", "sprites/henriete.webp");
                 nextStep(); // continue to the next line in the cutscene
             }),
         () => {
             switch(PlayerChoice) {
             case ("a opção 1"):
-                YOUshallSPEAK("Boa tentativa, mas não.", "sprites/waiter.webp");
+                YOUshallSPEAK("Boa tentativa, mas não.", "sprites/henriete.webp");
                 break;
             case ("a opção 2"):
-                YOUshallSPEAK("Uhum.", "sprites/waiter.webp");
+                YOUshallSPEAK("Uhum.", "sprites/henriete.webp");
                 break;
             case ("a opção 3"):
-                YOUshallSPEAK("...Não vou nem comentar.", "sprites/waiter.webp");
+                YOUshallSPEAK("...Não vou nem comentar.", "sprites/henriete.webp");
                 break;
             }
         },

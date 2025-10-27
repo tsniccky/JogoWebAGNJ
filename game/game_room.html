@@ -1,36 +1,32 @@
 <!DOCTYPE html>
-    <html>
-        <head>
-            
-            <meta charset="utf-8">
-            <title>Café Fantôme</title>
-            <link rel="stylesheet" href="style.css">
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Café Fantôme</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 
-        </head>
+<body>
+    <h1>salle des finances</h1>
+    <p>Press arrows to move and E to interact</p>
+    <canvas id="Canvas" width="960" height="540"></canvas>
 
-        <body>
+    <div class="dialogue">Dialogue Text<div class="OptionsContainer" style="display:none;"></div></div>
 
-            <h1>salle des finances</h1>
-            <p>Press arrows to move and E to interact</p>
-            <a href="main_hall.html">main hall</a>
-            <canvas id="Canvas" width="960" height="540"></canvas>
-            <div class="dialogue">Dialogue Text<div class="OptionsContainer" style="display:none;"></div></div>
-            
-            <div class="cutscene">
-                <img class="cutsceneImg" src="sprites/omori/omStanding_F.png">
-                <div class="cutsceneDialogueContainer">
-                <div class="cutsceneDialogue">Cutscene Text</div>
-                <div id="cutsceneOptions" class="OptionsContainer"></div>
-            </div>
-            </div>
-             <script src="cutscenes.js"></script>
-            <script src="game_room.js"></script>
-            <script src="DialogueOptionManagement.js"></script>
-            <script src="dialogueSystem.js"></script>
-            <script src="InteractionHandling.js"></script>
-            
+    <div class="cutscene">
+        <img class="cutsceneImg" src="sprites/omori/omStanding_F.png">
+        <div class="cutsceneDialogueContainer">
+            <div class="cutsceneDialogue">Cutscene Text</div>
+            <div id="cutsceneOptions" class="OptionsContainer"></div>
+        </div>
+    </div>
 
+    <div id="temporizador" style="display:none;">30</div>
 
-        </body>
-
-    </html>
+    <script src="cutscenes.js"></script>
+    <script src="game_room.js"></script>
+    <script src="DialogueOptionManagement.js"></script>
+    <script src="dialogueSystem.js"></script>
+    <script src="InteractionHandling.js"></script>
+</body>
+</html>

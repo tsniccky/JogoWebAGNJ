@@ -87,7 +87,7 @@ let objects = [
     { name: "tissues", x: 330, y: 310, width: 25, height: 25, interactable: true },
     { name: "television", x: 250, y: 155, width: 37, height: 37, interactable: true },
     { name: "lightbulb", x: 450, y: 0, width: 32, height: 32, interactable: true },
-    { name: "waiter", x: 310, y: 260, width: 20, height: 20, interactable: true }
+    { name: "waiter", x: 295, y: 250, width: 40, height: 40, interactable: true }
 ];
 
 
@@ -252,6 +252,7 @@ document.addEventListener("keydown", function(event) {
 
 
 document.addEventListener("keyup", stopMovement);
+
 
 
 

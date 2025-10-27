@@ -323,7 +323,7 @@ function Talk2Henri() {
 
     YOUshallCHOOSE(
         promptText,
-        "sprites/waiter.webp",
+        "sprites/henriete.webp",
         [
             { text: "Saco 1", value: "saco1" },
             { text: "Saco 2", value: "saco2" },
@@ -337,16 +337,16 @@ function Talk2Henri() {
             switch(choice) {
                 case "saco1":
                 case "saco2":
-                    YOUshallSPEAK("Você escolheu o " + choice + "… errou! Infelizmente. Mas talvez possamos ser amigos?...", "sprites/waiter.webp");
+                    YOUshallSPEAK("Você escolheu o " + choice + "… errou! Infelizmente. Mas talvez possamos ser amigos?...", "sprites/henriete.webp");
                     window.location.href = "game_over.html"; 
                     break;
                 case "saco3":
-                    YOUshallSPEAK("Você escolheu o Saco 3… Acertou! Parabéns!", "sprites/waiter.webp");
+                    YOUshallSPEAK("Você escolheu o Saco 3… Acertou! Parabéns!", "sprites/henriete.webp");
                     window.location.href = "win_game.html";
                     break;
                 case "nao":
                     cutsceneActive = false; // libera movimento
-                    YOUshallSPEAK("Tudo bem! Explore o café e volte quando estiver pronto.", "sprites/waiter.webp");
+                    YOUshallSPEAK("Tudo bem! Explore o café e volte quando estiver pronto.", "sprites/henriete.webp");
                     break;
             }
         }

@@ -29,7 +29,7 @@ let objectStates = {
     necker: { interactions: 0, messages: ["He stares at you","..."] }
 };
 
-// Sprite loading ------------------------------------------------------------------------
+// Sprite loading 
 
 const omori = new Image();
 omori.src = "sprites/jogador.webp";
@@ -57,7 +57,7 @@ necker.src = "sprites/necker.webp";
 
 
 
-// Object hitboxes -----------------------------------------------------------------------
+// Object hitboxes 
 
 let objects = [
     { name: "door", x: 320, y: 91, width: 44, height: 62, interactable: true },
@@ -69,19 +69,18 @@ let objects = [
     { name: "necker", x: 435, y: 280, width: 50, height: 50, interactable: true }
 ];
 
-// Spawn Omori perto da porta -----------------------------------------------------------
+// Spawn Omori perto da porta 
 
 const doorObj = objects.find(o => o.name === "door");
 let Xomori = doorObj.x + doorObj.width / 2;
 let Yomori = doorObj.y + doorObj.height + omori_htbx + 10; // 10 pixels abaixo da porta
 
-// Collision & interaction ---------------------------------------------------------------
-
+// Collision & interaction 
 function isColliding(ax, ay, aw, ah, bx, by, bw, bh) {
     return ax < bx + bw && ax + aw > bx && ay < by + bh && ay + ah > by;
 }
 
-// Interaction system -------------------------------------------------------
+// Interaction system
 
 let interactionRange = 60;
 let nearbyObject = null;
@@ -131,7 +130,7 @@ function handleKeyPress(event) {
 }
 
 
-// Drawing ------------------------------------------------------------------------------
+// Drawing 
 
 let currentOmori = omori;
 
@@ -162,7 +161,7 @@ function drawOmori(x, y) {
     drawInteractionPrompt();
 }
 
-// Movement ------------------------------------------------------------------------------
+// Movement 
 
 function moveByKey(event) {
     currentOmori = omoriRun;
@@ -197,12 +196,12 @@ function stopMovement(event) {
     }
 }
 
-// Event listeners -----------------------------------------------------------------------
+// Event listeners 
 
 document.addEventListener("keydown", event => { moveByKey(event); handleKeyPress(event); });
 document.addEventListener("keyup", stopMovement);
 
-// Initial draw --------------------------------------------------------------------------
+// Initial draw 
 omori.onload = () => {
     drawOmori(Xomori, Yomori);
     Talk2JNecker1();

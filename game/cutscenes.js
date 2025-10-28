@@ -1,4 +1,4 @@
-// CUTSCENES ----------------------------------------------------------------
+// CUTSCENES 
 
 function tutorial() {
 
@@ -26,7 +26,7 @@ function tutorial() {
     } else {
         console.log("Tutorial already completed");
         playCutscene(lines, "TUTORIAL");
-        //un-comment to make cutscene play regardless
+   
     }
 }
 
@@ -34,7 +34,7 @@ function Talk2Waiter() {
     cutsceneActive = true;
 
     const lines = [
-        // Linha inicial
+      
         () => YOUshallSPEAK("...?", "sprites/waiter.webp"),
 
         // Escolha do café
@@ -47,12 +47,11 @@ function Talk2Waiter() {
                 { text: "Ver o menu (voltar)", value: "Back" }
             ],
             (choice) => {
-                PlayerChoice = choice; // salva escolha global
+                PlayerChoice = choice; 
 
-                // Mostra fala do jogador sobre a escolha
                 YOUshallSPEAK("Você escolheu um " + choice + ".", "sprites/waiter.webp");
 
-                // Continua a cutscene
+                
                 nextStep();
             }
         ),
@@ -109,7 +108,7 @@ function Talk2JNecker1() {
             ],
             (PlayerChoice) => {
                 YOUshallSPEAK("Você escolheu '" + PlayerChoice + "'.", "sprites/necker.webp");
-                nextStep(); // continua a cutscene
+                nextStep(); 
 
                 // log pra debug
                 console.log("DEBUG: escolha JNecker1 = ", PlayerChoice);
@@ -166,7 +165,7 @@ function Talk2JNecker2() {
                 { text: "Ainda não", value: "não" },
             ],
             (PlayerChoice) => {YOUshallSPEAK("Você escolheu '" + PlayerChoice + "'.", "sprites/waiter.webp");
-                nextStep(); // continue to the next line in the cutscene
+                nextStep(); 
             }),
         () => {
             switch(PlayerChoice) {
@@ -200,7 +199,7 @@ function quiz() {
                 { text: "Haiti", value: "huh" }
             ],
             (PlayerChoice) => {YOUshallSPEAK("Você escolheu '" + PlayerChoice + "'.", "sprites/necker.webp");
-                nextStep(); // continue to the next line in the cutscene
+                nextStep(); 
             }),
         () => {
             switch(PlayerChoice) {
@@ -224,7 +223,7 @@ function quiz() {
                 { text: "No especial é só café arábica, enquanto o gourmet utiliza só o robusta.", value: "a opção 2" } 
             ],
             (PlayerChoice) => {YOUshallSPEAK("Você escolheu '" + PlayerChoice + "'.", "sprites/necker.webp");
-                nextStep(); // continue to the next line in the cutscene
+                nextStep(); 
             }),
         () => {
             switch(PlayerChoice) {
@@ -245,7 +244,7 @@ function quiz() {
                 { text: "O teor de cafeína aumenta", value: "a opção 3" } 
             ],
             (PlayerChoice) => {YOUshallSPEAK("Você escolheu '" + PlayerChoice + "'.", "sprites/necker.webp");
-                nextStep(); // continue to the next line in the cutscene
+                nextStep();
             }),
         () => {
             switch(PlayerChoice) {
@@ -268,7 +267,7 @@ function quiz() {
                 { text: "Diminuir o nível de cafeína...?", value: "a opção 3"}
             ],
             (PlayerChoice) => {YOUshallSPEAK("Parabéns! Uma dica: lembre-se do café robusta...", "sprites/necker.webp");
-                nextStep(); // continue to the next line in the cutscene
+                nextStep();
             }),
         () => {
             switch(PlayerChoice) {
@@ -299,15 +298,15 @@ function playCutscene(lines, nextSceneName) {
         if (i < lines.length) {
             const lineFunc = lines[i];
             i++;
-            lineFunc(); // executa a função atual da linha
+            lineFunc(); 
         } else {
             cutsceneActive = false;
             console.log("Cutscene ended:", nextSceneName);
-            window.nextStep = null; // limpa referência
+            window.nextStep = null; 
         }
     }
 
-    nextStep(); // inicia a primeira linha
+    nextStep(); 
 }
 document.addEventListener('keydown', (e) => {
     if (e.key === "Enter" && cutsceneActive) {
@@ -326,7 +325,6 @@ function YOUshallSPEAK(text, img) {
     const dialogueImg = document.querySelector('.cutsceneImg');
     dialogueImg.src = img;
 
-    // ❌ NÃO chamar nextStep aqui
 }
 
 
@@ -352,7 +350,7 @@ function Talk2Henri() {
         ],
         (choice) => {
             PlayerChoice = choice;
-            HenrietteFirstVisit = false; // marca que já visitou
+            HenrietteFirstVisit = false; 
 
             switch(choice) {
                 case "saco1":
@@ -365,7 +363,7 @@ function Talk2Henri() {
                     window.location.href = "win_game.html";
                     break;
                 case "nao":
-                    cutsceneActive = false; // libera movimento
+                    cutsceneActive = false; 
                     YOUshallSPEAK("Tudo bem! Explore o café e volte quando estiver pronto.", "sprites/henriete.webp");
                     break;
             }
@@ -386,7 +384,7 @@ function iniciarTemporizador() {
     audio.volume = 1; 
     audio.play().catch(err => console.log("Erro ao tocar áudio:", err));
 
-    // 🕒 Timer
+    //  Timer
     const intervalo = setInterval(() => {
         tempo--;
         temporizadorEl.textContent = tempo;
@@ -395,7 +393,7 @@ function iniciarTemporizador() {
             clearInterval(intervalo);
             temporizadorEl.textContent = "Tempo esgotado!";
             
-            // ⏹️ Para o áudio quando o tempo acabar
+            // Para o áudio quando o tempo acabar
             audio.pause();
             audio.currentTime = 0;
 
@@ -411,6 +409,7 @@ function iniciarTemporizador() {
         temporizadorEl.style.display = "none";
     };
 }
+
 
 
 

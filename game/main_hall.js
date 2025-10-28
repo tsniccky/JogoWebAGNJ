@@ -31,7 +31,7 @@ let objectStates = {
     waiter: { interactions: 0, messages: ["...", "The Waiter keeps silent", "He stares at you"] }
 };
 
-// Sprite loading ------------------------------------------------------------------------
+// Sprite loading
 
 const player = new Image();
 player.src = "sprites/jogador.webp";
@@ -63,14 +63,14 @@ television.src = "sprites/laptop.png";
 const waiter = new Image();
 waiter.src = "sprites/waiter.webp";
 
-// Initial draw --------------------------------------------------------------------------
+// Initial draw 
 
 player.onload = () => {
     drawplayer(Xplayer, Yplayer);
     tutorial();
 };
 
-// Object hitboxes -----------------------------------------------------------------------
+// Object hitboxes
 let objects = [
     { name: "door1", x: 650, y: 10, width: 34, height: 52, interactable: true },
     { name: "door2", x: 203, y: 430, width: 34, height: 52, interactable: true },
@@ -91,7 +91,7 @@ let objects = [
 ];
 
 
-// Collision detection -------------------------------------------------------------------
+// Collision detection 
 
 function isColliding(ax, ay, aw, ah, bx, by, bw, bh) {
     return (
@@ -103,7 +103,7 @@ function isColliding(ax, ay, aw, ah, bx, by, bw, bh) {
 }
 
 
-// Draw player and objects ----------------------------------------------------------------
+// Draw player and objects 
 
 let currentplayer = player;
 
@@ -125,8 +125,7 @@ function drawplayer(x, y) {
     ctx.lineWidth = 2;
     ctx.strokeRect(width / 2 - 250, height / 2 - 230, 500, 460);
 
-    // Draw all objects
-   // Draw all objects
+
    // Draw all objects
     for (let obj of objects) {
         switch (obj.name) {
@@ -158,7 +157,6 @@ function drawplayer(x, y) {
         player_htbx * 2
     );
     
-    //drawHitboxes();
     
     // Draw interaction prompt
     drawInteractionPrompt();
@@ -166,7 +164,7 @@ function drawplayer(x, y) {
 }
 
 
-// Movement ------------------------------------------------------------------------------
+// Movement
 
 function moveByKey(event) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -243,7 +241,7 @@ function stopMovement(event) {
     }
 }
 
-// Event listeners -----------------------------------------------------------------------
+// Event listeners
 
 document.addEventListener("keydown", function(event) {
     moveByKey(event);
@@ -252,6 +250,7 @@ document.addEventListener("keydown", function(event) {
 
 
 document.addEventListener("keyup", stopMovement);
+
 
 
 

@@ -380,6 +380,13 @@ function iniciarTemporizador() {
     temporizadorEl.style.display = "block";
     temporizadorEl.textContent = tempo;
 
+    // 🎵 Cria e inicia o áudio
+    const audio = new Audio("correbixo.mp3");
+    audio.loop = true; 
+    audio.volume = 1; 
+    audio.play().catch(err => console.log("Erro ao tocar áudio:", err));
+
+    // 🕒 Timer
     const intervalo = setInterval(() => {
         tempo--;
         temporizadorEl.textContent = tempo;
@@ -387,15 +394,23 @@ function iniciarTemporizador() {
         if (tempo <= 0) {
             clearInterval(intervalo);
             temporizadorEl.textContent = "Tempo esgotado!";
+            
+            // ⏹️ Para o áudio quando o tempo acabar
+            audio.pause();
+            audio.currentTime = 0;
+
             setTimeout(() => (window.location.href = "main_hall.html"), 1000);
         }
     }, 1000);
 
-    // retorna função pra cancelar
+   
     return () => {
         clearInterval(intervalo);
+        audio.pause();
+        audio.currentTime = 0;
         temporizadorEl.style.display = "none";
     };
 }
+
 
 

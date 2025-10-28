@@ -44,8 +44,6 @@ function drawInteractionPrompt() {
     }
 }
 
-// Object interaction --------------------------------------------------------------------
-
 function showMessageDialog(objectName, message) {
     // Create overlay
     let overlay = document.createElement('div');
@@ -70,17 +68,13 @@ function showMessageDialog(objectName, message) {
     dialog.style.textAlign = 'center';
     dialog.style.fontFamily = "'Courier New', Courier, monospace";
     
-    // Title
     let title = document.createElement('h2');
     title.textContent = objectName.charAt(0).toUpperCase() + objectName.slice(1);
     title.style.marginTop = '0';
     
-    // Message
     let messageText = document.createElement('p');
     messageText.textContent = message;
     messageText.style.fontSize = '16px';
-    
-    // Close button
     let closeButton = document.createElement('button');
     closeButton.textContent = 'Close';
     closeButton.style.padding = '10px 20px';
@@ -95,21 +89,17 @@ function showMessageDialog(objectName, message) {
         document.body.removeChild(overlay);
     };
     
-    // Assemble dialog
     dialog.appendChild(title);
     dialog.appendChild(messageText);
     dialog.appendChild(closeButton);
     overlay.appendChild(dialog);
     document.body.appendChild(overlay);
     
-    // Allow closing with Enter or Escape
     overlay.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' || e.key === 'Escape') {
             document.body.removeChild(overlay);
         }
     });
-    
-    // Focus on the overlay so keydown works
     overlay.tabIndex = 0;
     overlay.focus();
 }
@@ -121,10 +111,7 @@ function handleKeyPress(event) {
     }
 }
 
-// Event listeners -----------------------------------------------------------------------
 
-
-// Change cursor when hovering over nearby interactable objects
 canvas.addEventListener("mousemove", function(event) {
     const rect = canvas.getBoundingClientRect();
     const mouseX = event.clientX - rect.left;
@@ -143,3 +130,4 @@ canvas.addEventListener("mousemove", function(event) {
     
     canvas.style.cursor = isOverNearbyObject ? "pointer" : "default";
 });
+
